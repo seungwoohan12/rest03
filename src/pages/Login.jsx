@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 
+const KAKAO_JS_KEY = '98a3eca294a2bf155dd7cc2bb16d56a9'
+
 const inputCls = [
   'w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition',
   'focus:border-brand-royal focus:ring-2 focus:ring-brand-royal/20',
@@ -18,15 +20,6 @@ function KakaoIcon() {
   )
 }
 
-async function signInWithKakao() {
-  await supabase.auth.signInWithOAuth({
-    provider: 'kakao',
-    options: {
-      redirectTo: 'https://seungwoohan12.github.io/rest03/',
-    },
-  })
-}
-
 export default function Login() {
   const [mode,     setMode]     = useState('login')
   const [email,    setEmail]    = useState('')
@@ -39,6 +32,13 @@ export default function Login() {
   const { user, loading, signIn, signUp } = useAuth()
   const navigate = useNavigate()
 
+  // Kakao SDK 초기화
+  useEffect(() => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(KAKAO_JS_KEY)
+    }
+  }, [])
+
   useEffect(() => {
     if (!loading && user) navigate('/', { replace: true })
   }, [user, loading, navigate])
@@ -47,6 +47,36 @@ export default function Login() {
     setMode(m)
     setError('')
     setMessage('')
+  }
+
+  // 카카오 JS SDK 로그인
+  async function handleKakaoLogin() {
+    setError('')
+    setBusy(true)
+    try {
+      const authObj = await new Promise((resolve, reject) => {
+        window.Kakao.Auth.login({
+          scope: 'openid,profile_nickname',
+          success: resolve,
+          fail: reject,
+        })
+      })
+
+      if (!authObj.id_token) {
+        throw new Error('OpenID Connect가 비활성화 상태입니다. 카카오 개발자 콘솔 → 동의항목 → OpenID Connect ID 토큰을 활성화해주세요.')
+      }
+
+      const { error } = await supabase.auth.signInWithIdToken({
+        provider: 'kakao',
+        token: authObj.id_token,
+      })
+      if (error) throw error
+      navigate('/')
+    } catch (err) {
+      setError(err.error_description || err.message || '카카오 로그인에 실패했습니다.')
+    } finally {
+      setBusy(false)
+    }
   }
 
   async function handleSubmit(e) {
@@ -85,9 +115,7 @@ export default function Login() {
         {/* Logo */}
         <div className="mb-8 text-center">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-3">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-royal text-xl font-black text-white shadow-lg">
-              H
-            </span>
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-royal text-xl font-black text-white shadow-lg">H</span>
             <span className="text-2xl font-extrabold tracking-tight text-brand dark:text-white">HANU</span>
           </Link>
           <p className="text-sm text-neutral-500 dark:text-neutral-400">
@@ -101,8 +129,9 @@ export default function Login() {
           {/* 카카오 로그인 */}
           <button
             type="button"
-            onClick={signInWithKakao}
-            className="mb-6 flex w-full items-center justify-center gap-2.5 rounded-xl py-3 text-sm font-bold text-[#3C1E1E] transition hover:brightness-95 active:scale-[0.98]"
+            onClick={handleKakaoLogin}
+            disabled={busy}
+            className="mb-6 flex w-full items-center justify-center gap-2.5 rounded-xl py-3 text-sm font-bold text-[#3C1E1E] transition hover:brightness-95 active:scale-[0.98] disabled:opacity-60"
             style={{ backgroundColor: '#FEE500' }}
           >
             <KakaoIcon />
@@ -136,17 +165,12 @@ export default function Login() {
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
             <label className="flex flex-col gap-1.5">
               <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">이메일</span>
               <input
-                type="email"
-                required
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className={inputCls}
+                type="email" required autoComplete="email"
+                value={email} onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com" className={inputCls}
               />
             </label>
 
@@ -154,11 +178,8 @@ export default function Login() {
               <label className="flex flex-col gap-1.5">
                 <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">닉네임</span>
                 <input
-                  type="text"
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                  placeholder="사용할 닉네임 (선택)"
-                  className={inputCls}
+                  type="text" value={nickname} onChange={(e) => setNickname(e.target.value)}
+                  placeholder="사용할 닉네임 (선택)" className={inputCls}
                 />
               </label>
             )}
@@ -166,18 +187,12 @@ export default function Login() {
             <label className="flex flex-col gap-1.5">
               <span className="text-sm font-semibold text-neutral-700 dark:text-neutral-300">비밀번호</span>
               <input
-                type="password"
-                required
+                type="password" required minLength={6}
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                minLength={6}
-                className={inputCls}
+                value={password} onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••" className={inputCls}
               />
-              {mode === 'signup' && (
-                <span className="text-xs text-neutral-400">6자 이상</span>
-              )}
+              {mode === 'signup' && <span className="text-xs text-neutral-400">6자 이상</span>}
             </label>
 
             {error && (
@@ -192,8 +207,7 @@ export default function Login() {
             )}
 
             <button
-              type="submit"
-              disabled={busy}
+              type="submit" disabled={busy}
               className="mt-1 w-full rounded-full bg-brand-royal py-3 text-sm font-bold text-white shadow transition hover:bg-brand-royal-light disabled:opacity-60"
             >
               {busy ? '처리 중...' : mode === 'login' ? '로그인' : '회원가입'}

@@ -1,95 +1,110 @@
 import { Link } from 'react-router-dom'
-import { company } from '../data/site'
-import Placeholder from './Placeholder'
+import { company, nav } from '../data/site'
 
-// ============================================================
-// 푸터 — 상단: 로고 + 회사 소개문 / 하단: 주소·Family site·정책링크
-// ============================================================
+function YoutubeIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+    </svg>
+  )
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="2"/>
+      <circle cx="17.5" cy="6.5" r="1.5"/>
+    </svg>
+  )
+}
+
 export default function Footer() {
   return (
-    <footer className="relative">
-      {/* 상단 소개 영역 */}
-      <div className="mx-auto max-w-container px-4 py-20 md:px-10 lg:px-40">
-        <div className="flex flex-col items-start gap-8 md:flex-row md:items-center">
-          <div className="w-56 shrink-0">
-            <Placeholder label="LOGO" ratio="16/5" />
+    <footer className="bg-brand-deep text-white dark:bg-[#050E1F]">
+
+      {/* ─── 상단 영역 ──────────────────────────── */}
+      <div className="mx-auto max-w-container section-x py-16 md:py-20">
+        <div className="flex flex-col gap-12 lg:flex-row lg:gap-20">
+
+          {/* 브랜드 정보 */}
+          <div className="flex-shrink-0 lg:w-64">
+            <Link to="/" className="flex items-center gap-2 mb-5">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-royal text-white font-black">AI</span>
+              <span className="text-2xl font-extrabold text-white">{company.name}</span>
+            </Link>
+            <p className="mb-6 text-sm leading-6 text-white/60">{company.tagline}</p>
+            {/* 소셜 링크 */}
+            <div className="flex gap-3">
+              {company.social.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.name}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/70 transition hover:bg-brand-royal hover:text-white"
+                >
+                  {s.icon === 'yt' ? <YoutubeIcon /> : <InstagramIcon />}
+                </a>
+              ))}
+            </div>
           </div>
-          <div className="flex-grow text-base leading-7 text-neutral-700 md:text-[1.05rem]">
-            {company.intro.map((p, i) => (
-              <p key={i} className="mb-4 last:mb-0">
-                {p}
-              </p>
+
+          {/* 메뉴 링크 */}
+          <div className="grid flex-1 grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
+            {nav.map((item) => (
+              <div key={item.label}>
+                <h3 className="mb-4 text-sm font-bold text-white/90">{item.label}</h3>
+                <ul className="flex flex-col gap-2">
+                  {item.children.map((c) => (
+                    <li key={c.to}>
+                      <Link
+                        to={c.to}
+                        className="text-sm text-white/50 transition hover:text-brand-sky"
+                      >
+                        {c.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 하단 다크 영역 */}
-      <div className="bg-black px-4 py-12 md:px-10 lg:px-40">
-        <div className="mx-auto flex max-w-container flex-col gap-10">
-          <div className="flex flex-col justify-between gap-8 md:flex-row">
-            {/* 주소 */}
-            <div className="flex flex-col gap-2.5 text-sm">
-              {company.offices.map((o) => (
-                <div
-                  key={o.label}
-                  className="flex flex-col gap-1 md:flex-row md:gap-8"
+      {/* ─── 연락처 정보 ────────────────────────── */}
+      <div className="border-t border-white/10">
+        <div className="mx-auto max-w-container section-x py-8">
+          <div className="flex flex-col gap-3 text-xs text-white/40 sm:flex-row sm:flex-wrap sm:gap-6">
+            <span>{company.contact.address}</span>
+            <span>Tel: {company.contact.tel}</span>
+            <span>Email: {company.contact.email}</span>
+            <span>운영시간: {company.contact.hours}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ─── 하단 카피라이트 ─────────────────────── */}
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-container flex-col justify-between gap-3 section-x py-5 text-xs text-white/40 sm:flex-row sm:items-center">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1">
+            {company.footerLinks.map((l) => (
+              <li key={l.label}>
+                <Link
+                  to={l.to}
+                  className={[
+                    'transition hover:text-white',
+                    l.strong ? 'font-bold text-white/60' : '',
+                  ].join(' ')}
                 >
-                  <div className="w-14 shrink-0 font-bold text-neutral-200">
-                    {o.label}
-                  </div>
-                  <ul className="flex flex-col gap-1 font-medium text-neutral-400 md:flex-row md:gap-8">
-                    <li className="md:w-60">{o.address}</li>
-                    <li className="md:w-32">Tel : {o.tel}</li>
-                    <li>Fax : {o.fax}</li>
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            {/* Family site */}
-            <div className="w-full md:w-56">
-              <select
-                aria-label="Family site"
-                className="w-full rounded border border-zinc-600 bg-transparent px-4 py-2.5 text-sm font-bold text-neutral-300"
-                defaultValue=""
-                onChange={(e) => {
-                  if (e.target.value) window.open(e.target.value, '_blank')
-                }}
-              >
-                <option value="" disabled>
-                  Family site
-                </option>
-                {company.familySites.map((f) => (
-                  <option key={f.name} value={f.url} className="text-black">
-                    {f.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* 정책 링크 + 카피라이트 */}
-          <div className="flex flex-col justify-between gap-4 border-t border-neutral-800 pt-4 text-sm md:flex-row md:items-center">
-            <ul className="flex">
-              {company.footerLinks.map((l) => (
-                <li key={l.label}>
-                  <Link
-                    to={l.to}
-                    className={[
-                      'px-6 first:pl-0',
-                      l.strong
-                        ? 'font-black text-white'
-                        : 'font-medium text-neutral-400 hover:text-white',
-                    ].join(' ')}
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <p className="text-zinc-500">{company.copyright}</p>
-          </div>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p>{company.copyright}</p>
         </div>
       </div>
     </footer>

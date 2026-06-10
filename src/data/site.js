@@ -1,184 +1,329 @@
 // ============================================================
-// 사이트 전역 데이터 — 회사 정보 / 네비게이션 / 사업 / 프로젝트
-// 템플릿 사용 시 이 파일만 수정하면 대부분의 내용이 반영됩니다.
+// 사이트 전역 데이터 — 교육 회사 / 네비게이션 / 유튜브 영상
 // ============================================================
 
 export const company = {
-  name: 'CHINHUNG',
-  nameKo: '진흥기업',
-  fullName: 'CHINHUNG INTERNATIONAL INC.',
-  copyright: '© 2026 CHINHUNG INTERNATIONAL INC. All rights reserved.',
+  name:      'AILearn',
+  nameKo:    '에이아이런',
+  fullName:  'AILearn Education Center',
+  tagline:   'AI 시대를 앞서가는 온라인 교육',
+  copyright: '© 2026 AILearn Education Center. All rights reserved.',
   intro: [
-    '진흥기업은 단순한 건설을 넘어 사람이 머무는 공간과 그 공간을 둘러싼 환경까지 함께 설계합니다.',
-    '우리는 삶의 질을 높이는 구조를 고민하며 도시와 자연이 균형을 이루는 지속 가능한 기반을 만들어갑니다. 기술과 책임, 그리고 배려를 더해 조화로운 미래를 완성합니다.',
+    'AILearn은 AI 기초부터 실전 활용까지 체계적인 온라인 강의를 제공하는 AI 교육 전문 기관입니다.',
+    '인공지능의 핵심 원리를 이해하고 실생활에 적용하는 능력을 키우는 AI 리터러시 교육을 통해, 누구나 AI 시대를 자신 있게 준비할 수 있도록 돕습니다.',
   ],
-  offices: [
-    {
-      label: '서울지사',
-      address: '서울특별시 용산구 후암로 27 (후암동)',
-      tel: '02-772-1200',
-      fax: '02-754-2972',
-    },
-    {
-      label: '본사',
-      address: '인천광역시 연수구 컨벤시아대로 69 807호',
-      tel: '032-432-0658',
-      fax: '032-432-0659',
-    },
-  ],
-  familySites: [
-    { name: '효성그룹', url: 'https://www.hyosung.com' },
-    { name: '효성중공업', url: 'https://www.hyosungheavyindustries.com' },
-    { name: '효성굿스프링스', url: 'https://www.hsgoodsprings.com' },
-    { name: '효성티엔씨', url: 'https://www.hyosungtnc.com' },
-    { name: '효성화학', url: 'https://www.hyosungchemical.com' },
+  contact: {
+    address:  '서울특별시 강남구 테헤란로 123, AI타워 8층',
+    tel:      '02-1234-5678',
+    email:    'edu@ailearn.co.kr',
+    hours:    '평일 09:00 ~ 18:00',
+    kakao:    'AILearn 교육상담',
+  },
+  social: [
+    { name: 'YouTube',   url: 'https://www.youtube.com', icon: 'yt' },
+    { name: 'Instagram', url: 'https://www.instagram.com', icon: 'ig' },
   ],
   footerLinks: [
-    { label: '제보센터', to: '/report' },
-    { label: '법적고지', to: '/legal' },
-    { label: '개인정보처리방침', to: '/privacy', strong: true },
+    { label: '이용약관',          to: '/terms' },
+    { label: '개인정보처리방침',  to: '/privacy', strong: true },
+    { label: '문의하기',          to: '/contact' },
   ],
 }
 
-// 상단 GNB — 대메뉴 + 하위메뉴
+// ── GNB 메뉴 ────────────────────────────────────────────────
 export const nav = [
   {
     label: '회사소개',
-    to: '/about',
+    to: '/about/intro',
     children: [
-      { label: 'CEO 인사말', to: '/about/greetings' },
-      { label: '비전/가치', to: '/about/vision' },
-      { label: '연혁', to: '/about/history' },
-      { label: '브랜드소개', to: '/about/brand' },
+      { label: '소개',       to: '/about/intro' },
+      { label: '교육 철학',  to: '/about/philosophy' },
+      { label: '강사진',     to: '/about/instructors' },
+      { label: '연혁',       to: '/about/history' },
     ],
   },
   {
-    label: '사업소개',
-    to: '/business/housing',
+    label: 'AI 관련 영상',
+    to: '/videos/ai-related',
     children: [
-      { label: '주택사업', to: '/business/housing' },
-      { label: '건축사업', to: '/business/building' },
-      { label: '토목사업', to: '/business/civil' },
-      { label: '플랜트사업', to: '/business/plant' },
-      { label: '해외사업', to: '/business/global' },
+      { label: '전체',         to: '/videos/ai-related' },
+      { label: 'AI 기초',     to: '/videos/ai-related?sub=ai-basics' },
+      { label: 'AI 도구 활용', to: '/videos/ai-related?sub=ai-tools' },
+      { label: 'AI 트렌드',   to: '/videos/ai-related?sub=ai-trends' },
     ],
   },
   {
-    label: '지속가능경영',
-    to: '/sustainability/ethical',
+    label: 'AI 리터러시',
+    to: '/videos/ai-literacy',
     children: [
-      { label: '윤리경영', to: '/sustainability/ethical' },
-      { label: '안전경영', to: '/sustainability/safety' },
-      { label: '품질경영', to: '/sustainability/quality' },
-      { label: '사회공헌', to: '/sustainability/csr' },
+      { label: '전체',       to: '/videos/ai-literacy' },
+      { label: 'AI 이해',   to: '/videos/ai-literacy?sub=ai-understanding' },
+      { label: '데이터 사고', to: '/videos/ai-literacy?sub=data-thinking' },
+      { label: 'AI 윤리',   to: '/videos/ai-literacy?sub=ai-ethics' },
     ],
   },
   {
-    label: '투자정보',
-    to: '/investment',
+    label: '공지사항',
+    to: '/notice',
     children: [
-      { label: '재무정보', to: '/investment' },
-      { label: '공시정보', to: '/investment' },
-      { label: '공고', to: '/investment' },
+      { label: '공지사항',  to: '/notice' },
+      { label: '이벤트',   to: '/events' },
     ],
   },
   {
-    label: '고객센터',
-    to: '/support',
+    label: '문의하기',
+    to: '/contact',
     children: [
-      { label: '공지사항', to: '/support' },
-      { label: '문의하기', to: '/support' },
-    ],
-  },
-  {
-    label: '인재채용',
-    to: '/recruit',
-    children: [
-      { label: '인재상', to: '/recruit' },
-      { label: '채용공고', to: '/recruit' },
+      { label: '문의하기', to: '/contact' },
+      { label: 'FAQ',      to: '/faq' },
     ],
   },
 ]
 
-// 메인 — Our Business 카드
-export const businessCards = [
+// ── 영상 카테고리 ────────────────────────────────────────────
+export const videoCategories = [
   {
-    key: 'housing',
-    title: '주택 사업',
-    desc: '고객의 라이프스타일을 반영한 프리미엄 주거 공간으로 주거 문화를 선도합니다.',
-    to: '/business/housing',
+    key:   'ai-related',
+    label: 'AI 관련 영상',
+    title: 'AI 관련 영상',
+    desc:  'AI 기초 개념부터 최신 도구 활용, 트렌드까지 체계적으로 배웁니다.',
+    slug:  'ai-related',
   },
   {
-    key: 'building',
-    title: '건축 사업',
-    desc: '첨단 기술과 예술적 감각이 조화된 건축물로 도시의 스카이라인을 바꿉니다.',
-    to: '/business/building',
-  },
-  {
-    key: 'civil',
-    title: '토목 사업',
-    desc: '국가 인프라 구축의 핵심 역할을 수행하며 안전하고 편리한 생활 기반을 조성합니다.',
-    to: '/business/civil',
-  },
-  {
-    key: 'plant',
-    title: '플랜트 사업',
-    desc: '고도의 기술력이 요구되는 산업 기반 시설을 성공적으로 수행합니다.',
-    to: '/business/plant',
-  },
-  {
-    key: 'global',
-    title: '해외 사업',
-    desc: '축적된 기술력과 노하우를 바탕으로 글로벌 시장에 진출하여 역량을 입증합니다.',
-    to: '/business/global',
+    key:   'ai-literacy',
+    label: 'AI 리터러시',
+    title: 'AI 리터러시',
+    desc:  'AI를 올바르게 이해하고 비판적으로 사고하는 역량을 기릅니다.',
+    slug:  'ai-literacy',
   },
 ]
 
-// 사업소개 페이지 메타 (탭 / 카테고리)
-export const businessPages = {
-  housing: {
-    title: '주택사업',
-    headLabel: 'Housing',
-    categories: ['아파트', '주상복합', '오피스텔', '도시정비'],
-  },
-  building: {
-    title: '건축사업',
-    headLabel: 'Building',
-    categories: ['업무시설', '상업시설', '교육/문화', '의료시설'],
-  },
-  civil: {
-    title: '토목사업',
-    headLabel: 'Civil',
-    categories: ['도로/포장', '지하철/철도', '교량/터널/기타', '부지조성', '보안시설'],
-  },
-  plant: {
-    title: '플랜트사업',
-    headLabel: 'Plant',
-    categories: ['발전', '환경', '산업설비'],
-  },
-  global: {
-    title: '해외사업',
-    headLabel: 'Global',
-    categories: ['아시아', '중동', '기타'],
-  },
+export const videoSubCategories = {
+  'ai-related': [
+    { key: 'all',       label: '전체' },
+    { key: 'ai-basics', label: 'AI 기초' },
+    { key: 'ai-tools',  label: 'AI 도구 활용' },
+    { key: 'ai-trends', label: 'AI 트렌드' },
+  ],
+  'ai-literacy': [
+    { key: 'all',              label: '전체' },
+    { key: 'ai-understanding', label: 'AI 이해' },
+    { key: 'data-thinking',    label: '데이터 사고' },
+    { key: 'ai-ethics',        label: 'AI 윤리' },
+  ],
 }
 
-// 토목사업 — 도로/포장 카테고리 실적 (소스 데이터 반영, 이미지는 플레이스홀더)
-export const civilProjects = [
-  { title: '경부선 화성동탄 방음시설 설치공사', period: '2018.06 ~ 2019.11' },
-  { title: '보령-부여 도로건설공사', period: '2016.07 ~ 2023.12' },
-  { title: '분당~수서간 도시고속도로 소음저감시설 설치공사', period: '2015.07 ~ 2023.11' },
-  { title: '진접-내촌 도로건설공사 2공구', period: '2014.01 ~ 2020.12' },
-  { title: '명지지구진입도로 개설공사', period: '2013.07 ~ 2016.09' },
-  { title: '장지삼거리 입체화시설 건설공사', period: '2012.01 ~ 2016.12' },
-  { title: '충남도청신도시개발사업 2구역 지하차도 건설공사', period: '2010.07 ~ 2012.09' },
-  { title: '고속도로 제65호선 주문진 ~ 속초간 4공구', period: '2009.01 ~ 2016.12' },
+// ── 유튜브 동영상 목록 ─────────────────────────────────────
+// youtubeId: 유튜브 영상 고유 ID를 입력하세요.
+//   예) https://youtu.be/ABC123XYZ → youtubeId: 'ABC123XYZ'
+//   비공개 영상은 임베드가 되지 않으므로 '링크 공개(Unlisted)' 설정을 권장합니다.
+export const videos = [
+  // ── AI 관련 영상 ──
+  {
+    id:           'v01',
+    youtubeId:    'zjkBMFhNj_g',
+    title:        'AI란 무엇인가? 인공지능의 기초 개념',
+    desc:         'ChatGPT, 이미지 생성 AI 등 다양한 인공지능 기술의 기본 원리와 역사를 쉽고 체계적으로 설명합니다.',
+    category:     'ai-related',
+    subCategory:  'ai-basics',
+    subCategoryLabel: 'AI 기초',
+    duration:     '23:45',
+    uploadDate:   '2026.01.15',
+  },
+  {
+    id:           'v02',
+    youtubeId:    'aircAruvnKk',
+    title:        '머신러닝과 딥러닝의 차이 완벽 이해',
+    desc:         '머신러닝과 딥러닝의 개념적 차이를 시각적 예시와 함께 비교하고, 실제 활용 사례를 살펴봅니다.',
+    category:     'ai-related',
+    subCategory:  'ai-basics',
+    subCategoryLabel: 'AI 기초',
+    duration:     '18:30',
+    uploadDate:   '2026.01.22',
+  },
+  {
+    id:           'v03',
+    youtubeId:    'e5xKayCBOeU',
+    title:        'ChatGPT 프롬프트 작성법 마스터하기',
+    desc:         '효과적인 프롬프트 설계 원칙과 실전 예제를 통해 ChatGPT를 업무와 학습에 최대한 활용하는 방법을 배웁니다.',
+    category:     'ai-related',
+    subCategory:  'ai-tools',
+    subCategoryLabel: 'AI 도구 활용',
+    duration:     '31:12',
+    uploadDate:   '2026.02.05',
+  },
+  {
+    id:           'v04',
+    youtubeId:    'Ilg3gGewQ5U',
+    title:        'AI 이미지 생성: Midjourney & DALL-E 실습',
+    desc:         'Midjourney와 DALL-E를 활용하여 고품질 이미지를 생성하는 방법을 단계별로 실습합니다.',
+    category:     'ai-related',
+    subCategory:  'ai-tools',
+    subCategoryLabel: 'AI 도구 활용',
+    duration:     '27:08',
+    uploadDate:   '2026.02.18',
+  },
+  {
+    id:           'v05',
+    youtubeId:    'kCc8FmEb1nY',
+    title:        '2026 AI 트렌드: 주목해야 할 핵심 기술',
+    desc:         '멀티모달 AI, AI 에이전트, 엣지 AI 등 2026년 주목해야 할 AI 기술 트렌드를 심층 분석합니다.',
+    category:     'ai-related',
+    subCategory:  'ai-trends',
+    subCategoryLabel: 'AI 트렌드',
+    duration:     '35:55',
+    uploadDate:   '2026.03.01',
+  },
+  {
+    id:           'v06',
+    youtubeId:    'wjZofJX0v4M',
+    title:        '생성형 AI의 현재와 미래',
+    desc:         '텍스트, 이미지, 음악, 영상 생성 AI의 현황을 정리하고 앞으로의 발전 방향을 전망합니다.',
+    category:     'ai-related',
+    subCategory:  'ai-trends',
+    subCategoryLabel: 'AI 트렌드',
+    duration:     '29:40',
+    uploadDate:   '2026.03.15',
+  },
+  {
+    id:           'v07',
+    youtubeId:    'hd-MjW2do_M',
+    title:        'GitHub Copilot으로 코딩 생산성 10배 높이기',
+    desc:         'AI 코딩 도구 GitHub Copilot을 실무에 도입하는 방법과 효과적인 활용 팁을 알아봅니다.',
+    category:     'ai-related',
+    subCategory:  'ai-tools',
+    subCategoryLabel: 'AI 도구 활용',
+    duration:     '22:17',
+    uploadDate:   '2026.03.28',
+  },
+  {
+    id:           'v08',
+    youtubeId:    'PaCmpygFfXo',
+    title:        'LLM(대형 언어 모델)의 작동 원리',
+    desc:         'GPT, Claude, Gemini 등 대형 언어 모델이 어떻게 언어를 이해하고 생성하는지 내부 구조를 분석합니다.',
+    category:     'ai-related',
+    subCategory:  'ai-basics',
+    subCategoryLabel: 'AI 기초',
+    duration:     '41:23',
+    uploadDate:   '2026.04.10',
+  },
+  // ── AI 리터러시 ──
+  {
+    id:           'v09',
+    youtubeId:    '3JluqTojuME',
+    title:        'AI 시대의 미래 역량: 인간만이 할 수 있는 것',
+    desc:         'AI가 대체할 수 없는 인간 고유의 창의성, 공감 능력, 비판적 사고의 중요성을 탐구합니다.',
+    category:     'ai-literacy',
+    subCategory:  'ai-understanding',
+    subCategoryLabel: 'AI 이해',
+    duration:     '26:50',
+    uploadDate:   '2026.01.18',
+  },
+  {
+    id:           'v10',
+    youtubeId:    'R9OHn5ZF4Uo',
+    title:        '알고리즘 편향성이란? 공정한 AI 만들기',
+    desc:         '인공지능 시스템에 내재된 편향성의 원인과 사례를 분석하고, 공정한 AI를 위한 해결 방안을 모색합니다.',
+    category:     'ai-literacy',
+    subCategory:  'ai-ethics',
+    subCategoryLabel: 'AI 윤리',
+    duration:     '19:35',
+    uploadDate:   '2026.02.01',
+  },
+  {
+    id:           'v11',
+    youtubeId:    'ufn_vMKB4JM',
+    title:        '데이터 리터러시: 숫자를 비판적으로 읽는 법',
+    desc:         '통계와 데이터를 올바르게 해석하고 잘못된 데이터 시각화에 속지 않는 데이터 사고력을 기릅니다.',
+    category:     'ai-literacy',
+    subCategory:  'data-thinking',
+    subCategoryLabel: '데이터 사고',
+    duration:     '24:42',
+    uploadDate:   '2026.02.14',
+  },
+  {
+    id:           'v12',
+    youtubeId:    'yLpq15GRFBM',
+    title:        'AI가 일자리에 미치는 영향 — 공존의 미래',
+    desc:         'AI 자동화로 변화하는 직업 세계를 냉철하게 분석하고, AI와 함께 일하는 미래를 준비하는 방법을 제시합니다.',
+    category:     'ai-literacy',
+    subCategory:  'ai-understanding',
+    subCategoryLabel: 'AI 이해',
+    duration:     '33:18',
+    uploadDate:   '2026.02.28',
+  },
+  {
+    id:           'v13',
+    youtubeId:    'qFbNgJSMb4s',
+    title:        '딥페이크와 미디어 리터러시: 가짜 정보 판별하기',
+    desc:         '딥페이크 기술의 원리와 위험성을 이해하고, 가짜 뉴스와 조작된 미디어를 식별하는 능력을 키웁니다.',
+    category:     'ai-literacy',
+    subCategory:  'ai-ethics',
+    subCategoryLabel: 'AI 윤리',
+    duration:     '21:05',
+    uploadDate:   '2026.03.10',
+  },
+  {
+    id:           'v14',
+    youtubeId:    'aZ7pHkBOBNQ',
+    title:        '빅데이터와 개인정보 보호: 나의 데이터를 지켜라',
+    desc:         '디지털 시대에 개인 데이터가 어떻게 수집·활용되는지 알아보고, 자신의 프라이버시를 보호하는 방법을 배웁니다.',
+    category:     'ai-literacy',
+    subCategory:  'data-thinking',
+    subCategoryLabel: '데이터 사고',
+    duration:     '28:22',
+    uploadDate:   '2026.03.25',
+  },
+  {
+    id:           'v15',
+    youtubeId:    'OjdIGeS6GmY',
+    title:        'AI 윤리 원칙과 글로벌 사례 분석',
+    desc:         'EU AI Act, 국내 AI 정책 등 전 세계 AI 윤리 기준을 비교하고 책임 있는 AI 사용의 중요성을 논의합니다.',
+    category:     'ai-literacy',
+    subCategory:  'ai-ethics',
+    subCategoryLabel: 'AI 윤리',
+    duration:     '38:47',
+    uploadDate:   '2026.04.05',
+  },
+  {
+    id:           'v16',
+    youtubeId:    'Wb5y5jl0kFY',
+    title:        'AI 시대의 창의적 사고: 인간의 상상력이 경쟁력',
+    desc:         'AI 도구와 협력하여 창의력을 극대화하는 방법, 그리고 인간 고유의 창의적 역량을 발전시키는 전략을 탐구합니다.',
+    category:     'ai-literacy',
+    subCategory:  'ai-understanding',
+    subCategoryLabel: 'AI 이해',
+    duration:     '30:11',
+    uploadDate:   '2026.04.20',
+  },
 ]
 
-// 메인 공지
+// ── 홈 공지 ─────────────────────────────────────────────────
 export const notices = [
-  { id: 9, title: '진흥기업 홈페이지 리뉴얼 오픈 안내', date: '2026.05.27' },
-  { id: 8, title: '2026년 상반기 신입/경력사원 채용 공고', date: '2026.05.20' },
-  { id: 7, title: '진흥기업, ISO 9001 품질경영시스템 인증 갱신', date: '2026.05.05' },
-  { id: 6, title: '해링턴 플레이스 신규 분양 일정 안내', date: '2026.04.18' },
+  { id: 4, title: '2026년 AI 리터러시 여름 특강 신청 안내', date: '2026.06.01' },
+  { id: 3, title: '[신규 강좌] AI 윤리와 사회 시리즈 오픈', date: '2026.05.20' },
+  { id: 2, title: 'AILearn 유튜브 채널 구독자 1만 명 돌파 이벤트', date: '2026.05.10' },
+  { id: 1, title: 'AILearn 사이트 오픈 기념 무료 강의 제공', date: '2026.04.28' },
+]
+
+// ── 강사진 ──────────────────────────────────────────────────
+export const instructors = [
+  {
+    id: 'i01',
+    name: '김민준',
+    title: 'AI 연구소장 / AI 기초 담당',
+    bio:   'KAIST AI 박사, 전 삼성리서치 AI 연구원. AI 기초부터 실전까지 10년 이상의 강의 경력.',
+  },
+  {
+    id: 'i02',
+    name: '이서연',
+    title: '미디어 리터러시 전문가 / AI 리터러시 담당',
+    bio:   '서울대 언론정보학 석사, AI 윤리 및 디지털 미디어 리터러시 교육 전문가.',
+  },
+  {
+    id: 'i03',
+    name: '박준혁',
+    title: '데이터 사이언티스트 / AI 도구 활용 담당',
+    bio:   'Stanford 데이터사이언스 석사, 현 AI 스타트업 CTO. 실무 중심의 AI 도구 활용 강의 전문.',
+  },
 ]

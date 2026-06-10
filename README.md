@@ -1,48 +1,64 @@
-# rest03 — 건설사 회사 사이트 템플릿
+# AILearn — AI 교육 온라인 플랫폼
 
-[chinhung.co.kr](https://www.chinhung.co.kr/) 의 디자인·구성을 참고하여 만든 **React 기반 건설사 회사 홈페이지 템플릿**입니다.
-모든 이미지는 **플레이스홀더**로 표기되어 있어, 실제 이미지로 교체하기만 하면 바로 사용할 수 있습니다.
+**AILearn(에이아이런)** 은 AI 기초부터 AI 리터러시까지 유튜브 동영상 강의를 제공하는 온라인 교육 플랫폼입니다.
+
+🌐 **배포 URL**: https://seungwoohan12.github.io/rest03/
+
+## 주요 기능
+
+- 🤖 **AI 관련 영상** — AI 기초 / AI 도구 활용 / AI 트렌드 주제별 분류
+- 📚 **AI 리터러시** — AI 이해 / 데이터 사고 / AI 윤리 커리큘럼
+- 🎬 **2×3 그리드 + 페이지네이션** — 페이지당 6개, 모달 유튜브 재생
+- 🌙 **다크/라이트 모드** — OS 설정 자동 감지, 토글 저장
+- 📱 **모바일 최적화** — 반응형 레이아웃, 햄버거 메뉴
+
+## 컬러 팔레트
+
+| 컬러 | HEX | 용도 |
+|------|-----|------|
+| Deep Navy | `#0B1D3A` | 다크모드 배경 |
+| Dark Blue | `#1E3A8A` | 주 브랜드 |
+| Royal Blue | `#2563EB` | 버튼·CTA |
+| Sky Cyan | `#0EA5E9` | 포인트·뱃지 |
+| Ice White | `#F0F9FF` | 라이트 배경 |
 
 ## 기술 스택
 
 - **React 18** + **Vite 5**
-- **React Router 6** (HashRouter — GitHub Pages 정적 호스팅 호환)
-- **Tailwind CSS 3**
+- **React Router 6** (HashRouter — GitHub Pages 호환)
+- **Tailwind CSS 3** (`darkMode: 'class'`)
 - 폰트: Pretendard (CDN)
 
 ## 구조
 
 ```
 src/
-├── main.jsx              # 진입점 (HashRouter)
-├── App.jsx               # 라우팅
-├── index.css             # Tailwind + 공통 스타일
+├── context/
+│   └── ThemeContext.jsx       # 다크/라이트 모드 Context
 ├── data/
-│   └── site.js           # ★ 회사정보·네비·사업·실적 데이터 (여기만 수정하면 대부분 반영)
+│   └── site.js               # ★ 회사정보·메뉴·유튜브영상 데이터
 ├── components/
-│   ├── Header.jsx        # 상단 GNB (데스크탑 메가메뉴 / 모바일 패널)
-│   ├── Footer.jsx        # 푸터 (주소·Family site·정책링크)
-│   ├── ScrollToTop.jsx   # 라우트 변경 시 스크롤 초기화
+│   ├── Header.jsx             # GNB + 다크모드 토글 + 모바일 패널
+│   ├── Footer.jsx             # 푸터 (소셜·메뉴·연락처)
 │   ├── ScrollToTopButton.jsx  # 우측하단 맨위로 버튼
-│   ├── SubPageLayout.jsx # 서브페이지 공통 (sticky 탭 + 페이지헤드)
-│   └── Placeholder.jsx   # 이미지 플레이스홀더
+│   └── SubPageLayout.jsx      # 서브페이지 공통 레이아웃
 └── pages/
-    ├── Home.jsx          # 메인 (히어로 슬라이더 / Our Business / 공지)
-    ├── Business.jsx      # 사업소개 (카테고리 탭 + 실적 그리드 + 페이지네이션)
-    ├── Sustainability.jsx# 지속가능경영 (품질경영 선언·방침·인증)
-    ├── About.jsx         # 회사소개 (CEO인사말·연혁 등)
-    └── SimplePage.jsx    # 투자정보/고객센터/인재채용 등 단순 페이지
+    ├── Home.jsx               # 메인 (히어로·카테고리·최신영상·공지)
+    ├── Videos.jsx             # 유튜브 갤러리 (2×3 그리드·페이지네이션·모달)
+    ├── About.jsx              # 회사소개 (intro·philosophy·instructors·history)
+    ├── Contact.jsx            # 문의하기 폼
+    └── SimplePage.jsx         # 공지·FAQ 등 단순 페이지
 ```
 
 ## 페이지 / 라우트
 
 | 메뉴 | 경로 |
-| --- | --- |
-| 메인 | `/` |
-| 회사소개 | `/about/greetings` `/about/vision` `/about/history` `/about/brand` |
-| 사업소개 | `/business/housing` `…/building` `…/civil` `…/plant` `…/global` |
-| 지속가능경영 | `/sustainability/ethical` `…/safety` `…/quality` `…/csr` |
-| 투자정보·고객센터·인재채용 | `/investment` `/support` `/recruit` |
+|------|------|
+| 홈 | `/` |
+| 회사소개 | `/about/intro` `…/philosophy` `…/instructors` `…/history` |
+| AI 관련 영상 | `/videos/ai-related?sub=ai-basics` `…ai-tools` `…ai-trends` |
+| AI 리터러시 | `/videos/ai-literacy?sub=ai-understanding` `…data-thinking` `…ai-ethics` |
+| 문의하기 | `/contact` |
 
 ## 개발
 
@@ -50,18 +66,27 @@ src/
 npm install
 npm run dev      # http://localhost:5173/rest03/
 npm run build    # dist/
-npm run preview
 ```
+
+## 유튜브 영상 등록
+
+`src/data/site.js`의 `videos` 배열에서 `youtubeId` 필드를 실제 영상 ID로 교체합니다.
+
+```js
+// https://youtu.be/ABC123XYZ → youtubeId: 'ABC123XYZ'
+{ youtubeId: 'ABC123XYZ', title: '영상 제목', category: 'ai-related', ... }
+```
+
+> **링크 공개(Unlisted)** 로 설정된 영상은 임베드 재생 정상 동작합니다.  
+> 비공개 영상은 임베드가 차단되므로 링크 공개 설정을 권장합니다.
 
 ## 배포
 
-`main` 브랜치 push 시 GitHub Actions(`.github/workflows/deploy.yml`)가 자동으로 빌드 후
-GitHub Pages 에 배포합니다. 배포 URL: `https://aebonlee.github.io/rest03/`
+`main` 브랜치 push 시 GitHub Actions가 자동으로 빌드 후 GitHub Pages 배포합니다.
 
-> Vite `base` 가 `/rest03/` 로 설정되어 있습니다. 다른 경로/도메인에 배포하려면 `vite.config.js` 의 `base` 를 수정하세요.
+> 최초 1회: GitHub 저장소 **Settings → Pages → Source → GitHub Actions** 로 전환 필요
 
-## 커스터마이징
+## 개발일지
 
-- **회사 정보 / 메뉴 / 실적**: `src/data/site.js`
-- **브랜드 컬러**: `tailwind.config.js` 의 `colors.brand` / `colors.accent`
-- **이미지 교체**: `Placeholder` 컴포넌트를 실제 `<img>` 로 교체
+- [01. 초기 템플릿 구축](Dev_md/01_초기_템플릿_구축.md) — 건설사 사이트 템플릿 (2026-06-08)
+- [02. AI 교육 플랫폼 리뉴얼](Dev_md/02_AI교육플랫폼_리뉴얼.md) — 전면 재구성 (2026-06-10)

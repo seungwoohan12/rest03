@@ -5,29 +5,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ─────────────────────────────────────────────────────────
-        // 5-color brand palette
-        //  1. deep-navy  #0B1D3A  최심 다크 (다크모드 배경)
-        //  2. dark-blue  #1E3A8A  주 브랜드 컬러 (다크블루)
-        //  3. royal-blue #2563EB  CTA / 인터랙티브 (로열블루)
-        //  4. sky-cyan   #0EA5E9  포인트 / 뱃지 (스카이 사이언)
-        //  5. ice-white  #F0F9FF  라이트 배경 (아이스 화이트)
-        // ─────────────────────────────────────────────────────────
+        // CSS 변수 기반 — 팔레트 5종 전환 지원
+        // rgb(var(--x) / <alpha-value>) 형식: bg-brand-royal/50 등 opacity 변형 지원
         brand: {
-          DEFAULT:      '#1E3A8A',   // 2 dark-blue
-          deep:         '#0B1D3A',   // 1 deep-navy
-          navy:         '#122347',   // deep-navy와 dark-blue 사이
-          royal:        '#2563EB',   // 3 royal-blue
-          'royal-light':'#3B82F6',   // royal-blue 밝은 버전
-          sky:          '#0EA5E9',   // 4 sky-cyan
-          'sky-light':  '#38BDF8',   // sky-cyan 밝은 버전
-          ice:          '#F0F9FF',   // 5 ice-white
-          'ice-dark':   '#E0F2FE',   // ice-white 어두운 버전
+          DEFAULT:       'rgb(var(--brand) / <alpha-value>)',
+          deep:          'rgb(var(--brand-deep) / <alpha-value>)',
+          navy:          'rgb(var(--brand-navy) / <alpha-value>)',
+          royal:         'rgb(var(--brand-royal) / <alpha-value>)',
+          'royal-light': 'rgb(var(--brand-royal-light) / <alpha-value>)',
+          sky:           'rgb(var(--brand-sky) / <alpha-value>)',
+          'sky-light':   'rgb(var(--brand-sky-light) / <alpha-value>)',
+          ice:           'rgb(var(--brand-ice) / <alpha-value>)',
+          'ice-dark':    'rgb(var(--brand-ice-dark) / <alpha-value>)',
         },
-        // 다크모드 표면 색상 (카드 등)
         surface: {
-          dark:  '#122347',
-          'dark-2': '#1A2E56',
+          dark:     'rgb(var(--surface-dark) / <alpha-value>)',
+          'dark-2': 'rgb(var(--surface-dark-2) / <alpha-value>)',
         },
       },
       fontFamily: {

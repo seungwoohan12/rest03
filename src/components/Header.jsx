@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { nav, company } from '../data/site'
 import { useTheme } from '../context/ThemeContext'
+import { usePalette, palettes } from '../context/PaletteContext'
 
 function SunIcon() {
   return (
@@ -27,6 +28,61 @@ function MoonIcon() {
   )
 }
 
+// ─── 팔레트 스위처 ────────────────────────────────────────────
+function PaletteSwitcher() {
+  const { paletteId, setPaletteId } = usePalette()
+  return (
+    <div className="hidden items-center gap-1.5 lg:flex" title="컬러 팔레트 변경">
+      {palettes.map((p) => (
+        <button
+          key={p.id}
+          type="button"
+          title={p.label}
+          onClick={() => setPaletteId(p.id)}
+          className={[
+            'h-5 w-5 rounded-full transition-all duration-200 hover:scale-125',
+            paletteId === p.id
+              ? 'scale-125 ring-2 ring-white ring-offset-1 ring-offset-transparent shadow-lg'
+              : 'opacity-70 hover:opacity-100',
+          ].join(' ')}
+          style={{
+            background: `linear-gradient(135deg, ${p.royal} 50%, ${p.sky} 50%)`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+// ─── 모바일 팔레트 스위처 ────────────────────────────────────
+function MobilePaletteSwitcher() {
+  const { paletteId, setPaletteId } = usePalette()
+  return (
+    <div className="mb-4 rounded-xl bg-brand-ice p-4 dark:bg-white/10">
+      <p className="mb-3 text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">컬러 팔레트</p>
+      <div className="flex gap-3">
+        {palettes.map((p) => (
+          <button
+            key={p.id}
+            type="button"
+            title={p.label}
+            onClick={() => setPaletteId(p.id)}
+            className={[
+              'h-8 w-8 rounded-full transition-all duration-200 hover:scale-110',
+              paletteId === p.id
+                ? 'scale-110 ring-2 ring-brand-royal ring-offset-2 shadow-md dark:ring-brand-sky'
+                : 'opacity-60 hover:opacity-100',
+            ].join(' ')}
+            style={{
+              background: `linear-gradient(135deg, ${p.royal} 50%, ${p.sky} 50%)`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [hovered,    setHovered]    = useState(null)
@@ -40,7 +96,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // 모바일 패널 — 라우트 변경 시 닫기
   useEffect(() => { setMobileOpen(false) }, [location.pathname])
 
   const headerBase = [
@@ -58,7 +113,9 @@ export default function Header() {
 
         {/* 로고 */}
         <Link to="/" className="flex items-center gap-2 group">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-royal text-white text-base font-black group-hover:bg-brand-royal-light transition">H</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-royal text-white text-base font-black group-hover:bg-brand-royal-light transition">
+            H
+          </span>
           <span className="text-xl font-extrabold tracking-tight text-brand dark:text-white">
             {company.name}
           </span>
@@ -89,7 +146,7 @@ export default function Header() {
           ))}
         </ul>
 
-        {/* 우측 액션 버튼들 */}
+        {/* 우측 액션 */}
         <div className="flex items-center gap-2">
           {/* 다크/라이트 토글 */}
           <button
@@ -100,6 +157,13 @@ export default function Header() {
           >
             {isDark ? <SunIcon /> : <MoonIcon />}
           </button>
+
+          {/* 팔레트 스위처 — 문의하기 버튼 왼쪽 */}
+          <div className="hidden lg:flex items-center gap-2">
+            <div className="h-4 w-px bg-neutral-200 dark:bg-white/20" />
+            <PaletteSwitcher />
+            <div className="h-4 w-px bg-neutral-200 dark:bg-white/20" />
+          </div>
 
           {/* 문의하기 (데스크탑) */}
           <Link
@@ -135,7 +199,7 @@ export default function Header() {
           {nav.map((item) => (
             <ul
               key={item.label}
-              className="flex w-40 flex-col gap-2 py-6"
+              className="flex w-48 flex-col gap-2 py-6"
               onMouseEnter={() => setHovered(item.label)}
             >
               {hovered === item.label &&
@@ -162,7 +226,6 @@ export default function Header() {
             onClick={() => setMobileOpen(false)}
           />
           <div className="absolute right-0 top-0 h-full w-4/5 max-w-sm overflow-y-auto bg-white p-6 shadow-2xl dark:bg-brand-navy">
-            {/* 패널 헤더 */}
             <div className="mb-8 flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-royal text-sm font-black text-white">H</span>
@@ -173,21 +236,22 @@ export default function Header() {
                 aria-label="메뉴 닫기"
                 className="text-2xl leading-none text-neutral-400"
                 onClick={() => setMobileOpen(false)}
-              >
-                ✕
-              </button>
+              >✕</button>
             </div>
 
             {/* 다크모드 토글 */}
             <button
               onClick={toggleTheme}
-              className="mb-6 flex w-full items-center justify-between rounded-xl bg-brand-ice px-4 py-3 text-sm font-semibold text-brand dark:bg-white/10 dark:text-white"
+              className="mb-4 flex w-full items-center justify-between rounded-xl bg-brand-ice px-4 py-3 text-sm font-semibold text-brand dark:bg-white/10 dark:text-white"
             >
               <span>{isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}</span>
               {isDark ? <SunIcon /> : <MoonIcon />}
             </button>
 
-            {/* 메뉴 목록 */}
+            {/* 모바일 팔레트 스위처 */}
+            <MobilePaletteSwitcher />
+
+            {/* 메뉴 */}
             <ul className="flex flex-col gap-1">
               {nav.map((item) => (
                 <li key={item.label} className="border-b border-neutral-100 pb-1 dark:border-white/10">
@@ -213,11 +277,7 @@ export default function Header() {
               ))}
             </ul>
 
-            {/* 문의하기 버튼 */}
-            <Link
-              to="/contact"
-              className="btn-primary mt-6 w-full justify-center"
-            >
+            <Link to="/contact" className="btn-primary mt-6 w-full justify-center">
               문의하기
             </Link>
           </div>

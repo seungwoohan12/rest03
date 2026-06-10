@@ -13,12 +13,11 @@ export const company = {
     '인터뷰, 홍보 영상, 숏폼 콘텐츠까지 — 각 프로젝트의 고유한 이야기를 가장 효과적인 방식으로 담아냅니다. 브랜드와 사람 사이의 연결을 영상으로 만듭니다.',
   ],
   contact: {
-    address:  '서울특별시',
-    tel:      '',
-    email:    'hsu235@gmail.com',
-    hours:    '',
+    address: '서울특별시',
+    tel:     '',
+    email:   'hsu235@gmail.com',
+    hours:   '',
   },
-  // ── 소셜 채널 ──────────────────────────────────────────────
   social: [
     {
       name:  'YouTube',
@@ -34,8 +33,8 @@ export const company = {
     },
   ],
   footerLinks: [
-    { label: '포트폴리오',  to: '/videos/yojeom' },
-    { label: '문의하기',    to: '/contact' },
+    { label: '포트폴리오', to: '/videos/yojeom' },
+    { label: '문의하기',   to: '/contact' },
   ],
 }
 
@@ -57,8 +56,6 @@ export const nav = [
     children: [
       { label: '요즘 것들의 돈버는 이야기', to: '/videos/yojeom' },
       { label: '서울청년센터 강북',         to: '/videos/gangbuk' },
-      { label: 'AI 관련 영상',              to: '/videos/ai-related' },
-      { label: 'AI 리터러시',               to: '/videos/ai-literacy' },
     ],
   },
   {
@@ -89,22 +86,6 @@ export const videoCategories = [
     desc:       '서울청년센터 강북 클라이언트 의뢰 제작 — 공간 홍보, 오시는길, 지원사업 안내 영상.',
     group:      'production',
   },
-  {
-    key:        'ai-related',
-    label:      'AI 관련 영상',
-    shortLabel: 'AI 관련',
-    title:      'AI 관련 영상',
-    desc:       'AI 기초 개념부터 도구 활용법까지. HANU가 기획·제작한 AI 교육 콘텐츠 시리즈.',
-    group:      'content',
-  },
-  {
-    key:        'ai-literacy',
-    label:      'AI 리터러시',
-    shortLabel: 'AI 리터러시',
-    title:      'AI 리터러시',
-    desc:       'AI를 올바르게 이해하고 비판적으로 사고하는 역량을 기르는 영상 시리즈.',
-    group:      'content',
-  },
 ]
 
 // ── 소분류 필터 ──────────────────────────────────────────────
@@ -118,21 +99,11 @@ export const videoSubCategories = {
     { key: 'directions', label: '오시는길' },
     { key: 'support',    label: '지원사업' },
   ],
-  'ai-related': [
-    { key: 'all',       label: '전체' },
-    { key: 'ai-basics', label: 'AI 기초' },
-    { key: 'ai-tools',  label: 'AI 도구 활용' },
-    { key: 'ai-trends', label: 'AI 트렌드' },
-  ],
-  'ai-literacy': [
-    { key: 'all',              label: '전체' },
-    { key: 'ai-understanding', label: 'AI 이해' },
-    { key: 'data-thinking',    label: '데이터 사고' },
-    { key: 'ai-ethics',        label: 'AI 윤리' },
-  ],
 }
 
 // ── 유튜브 동영상 목록 ─────────────────────────────────────
+// youtubeId: 유튜브 영상 고유 ID
+// startTime: 영상 시작 초(sec) — embed에 &start=N 으로 적용
 export const videos = [
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -140,7 +111,8 @@ export const videos = [
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   {
     id:               'y01',
-    youtubeId:        'PLACEHOLDER_y01',
+    youtubeId:        'fcxRdE5IZvk',
+    startTime:        19,
     title:            '요즘 것들의 돈버는 이야기 — 양군 대표님',
     desc:             '직접 발로 뛰며 만들어 온 창업의 현실과 생존 전략. 양군 대표님의 솔직한 이야기.',
     category:         'yojeom',
@@ -149,10 +121,12 @@ export const videos = [
     isShort:          false,
     duration:         '',
     uploadDate:       '2026.06.10',
+    youtubeUrl:       'https://www.youtube.com/watch?v=fcxRdE5IZvk&t=19s',
   },
   {
     id:               'y02',
-    youtubeId:        'PLACEHOLDER_y02',
+    youtubeId:        'UWvLaO6N3W4',
+    startTime:        18,
     title:            '요즘 것들의 돈버는 이야기 — 규필름 대표님',
     desc:             '영상 제작 1인 창업부터 법인 설립까지. 규필름 대표님이 말하는 크리에이터 창업.',
     category:         'yojeom',
@@ -161,10 +135,12 @@ export const videos = [
     isShort:          false,
     duration:         '',
     uploadDate:       '2026.06.10',
+    youtubeUrl:       'https://www.youtube.com/watch?v=UWvLaO6N3W4&t=18s',
   },
   {
     id:               'y03',
-    youtubeId:        'PLACEHOLDER_y03',
+    youtubeId:        'avqHH8FiazE',
+    startTime:        75,
     title:            '요즘 것들의 돈버는 이야기 — 진현정 대표님',
     desc:             '20대에 회사를 차린다는 것의 의미. 진현정 대표님의 실패와 성공 이야기.',
     category:         'yojeom',
@@ -173,10 +149,12 @@ export const videos = [
     isShort:          false,
     duration:         '',
     uploadDate:       '2026.06.10',
+    youtubeUrl:       'https://www.youtube.com/watch?v=avqHH8FiazE&t=75s',
   },
   {
     id:               'y04',
-    youtubeId:        'PLACEHOLDER_y04',
+    youtubeId:        'u0nfkiqf-Mw',
+    startTime:        39,
     title:            '요즘 것들의 돈버는 이야기 — 데이빗 대표님',
     desc:             '글로벌 시장을 목표로 한 스타트업 창업. 데이빗 대표님의 도전과 현재진행형 스토리.',
     category:         'yojeom',
@@ -185,6 +163,7 @@ export const videos = [
     isShort:          false,
     duration:         '',
     uploadDate:       '2026.06.10',
+    youtubeUrl:       'https://www.youtube.com/watch?v=u0nfkiqf-Mw&t=39s',
   },
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -268,114 +247,14 @@ export const videos = [
     uploadDate:       '2026.05.01',
     youtubeUrl:       'https://www.youtube.com/shorts/18-mkabkGxc',
   },
-
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // AI 관련 영상 (준비 중)
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  {
-    id:               'a01',
-    youtubeId:        'PLACEHOLDER_a01',
-    title:            'AI란 무엇인가? 인공지능의 기초 개념',
-    desc:             'ChatGPT, 이미지 생성 AI 등 다양한 인공지능 기술의 기본 원리를 쉽게 설명합니다.',
-    category:         'ai-related',
-    subCategory:      'ai-basics',
-    subCategoryLabel: 'AI 기초',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
-  {
-    id:               'a02',
-    youtubeId:        'PLACEHOLDER_a02',
-    title:            '머신러닝과 딥러닝의 차이 완벽 이해',
-    desc:             '머신러닝과 딥러닝의 개념적 차이를 시각적 예시와 함께 비교합니다.',
-    category:         'ai-related',
-    subCategory:      'ai-basics',
-    subCategoryLabel: 'AI 기초',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
-  {
-    id:               'a03',
-    youtubeId:        'PLACEHOLDER_a03',
-    title:            'ChatGPT 프롬프트 작성법 마스터하기',
-    desc:             '효과적인 프롬프트 설계 원칙과 실전 예제로 ChatGPT를 최대 활용하는 방법.',
-    category:         'ai-related',
-    subCategory:      'ai-tools',
-    subCategoryLabel: 'AI 도구 활용',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
-  {
-    id:               'a04',
-    youtubeId:        'PLACEHOLDER_a04',
-    title:            '2026 AI 트렌드: 주목해야 할 핵심 기술',
-    desc:             '멀티모달 AI, AI 에이전트 등 2026년 주목해야 할 AI 기술 트렌드 분석.',
-    category:         'ai-related',
-    subCategory:      'ai-trends',
-    subCategoryLabel: 'AI 트렌드',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
-  {
-    id:               'l01',
-    youtubeId:        'PLACEHOLDER_l01',
-    title:            'AI 시대의 미래 역량: 인간만이 할 수 있는 것',
-    desc:             'AI가 대체할 수 없는 인간 고유의 창의성, 공감 능력, 비판적 사고의 중요성.',
-    category:         'ai-literacy',
-    subCategory:      'ai-understanding',
-    subCategoryLabel: 'AI 이해',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
-  {
-    id:               'l02',
-    youtubeId:        'PLACEHOLDER_l02',
-    title:            '알고리즘 편향성이란? 공정한 AI 만들기',
-    desc:             '인공지능 시스템에 내재된 편향성의 원인과 사례를 분석합니다.',
-    category:         'ai-literacy',
-    subCategory:      'ai-ethics',
-    subCategoryLabel: 'AI 윤리',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
-  {
-    id:               'l03',
-    youtubeId:        'PLACEHOLDER_l03',
-    title:            '데이터 리터러시: 숫자를 비판적으로 읽는 법',
-    desc:             '통계와 데이터를 올바르게 해석하고 잘못된 시각화에 속지 않는 사고력.',
-    category:         'ai-literacy',
-    subCategory:      'data-thinking',
-    subCategoryLabel: '데이터 사고',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
-  {
-    id:               'l04',
-    youtubeId:        'PLACEHOLDER_l04',
-    title:            'AI 윤리 원칙과 글로벌 사례 분석',
-    desc:             'EU AI Act, 국내 AI 정책 등 전 세계 AI 윤리 기준을 비교합니다.',
-    category:         'ai-literacy',
-    subCategory:      'ai-ethics',
-    subCategoryLabel: 'AI 윤리',
-    isShort:          false,
-    duration:         '',
-    uploadDate:       '준비 중',
-  },
 ]
 
 // ── 홈 공지 ─────────────────────────────────────────────────
 export const notices = [
   { id: 4, title: '서울청년센터 강북 영상 제작 완료 — 포트폴리오 업데이트', date: '2026.06.01' },
-  { id: 3, title: '요즘 것들의 돈버는 이야기 시리즈 제작 착수',            date: '2026.05.20' },
-  { id: 2, title: 'HANU 포트폴리오 사이트 오픈',                           date: '2026.05.10' },
-  { id: 1, title: '영상 제작 의뢰 문의를 받습니다',                        date: '2026.04.28' },
+  { id: 3, title: '요즘 것들의 돈버는 이야기 시리즈 공개',                  date: '2026.05.20' },
+  { id: 2, title: 'HANU 포트폴리오 사이트 오픈',                            date: '2026.05.10' },
+  { id: 1, title: '영상 제작 의뢰 문의를 받습니다',                         date: '2026.04.28' },
 ]
 
 // ── 멤버 ────────────────────────────────────────────────────

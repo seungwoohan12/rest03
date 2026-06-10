@@ -13,7 +13,7 @@ export function ThemeProvider({ children }) {
     const root = document.documentElement
     if (isDark) {
       root.classList.add('dark')
-      document.body.style.backgroundColor = '#0B1D3A'
+      document.body.style.backgroundColor = '#082032'
     } else {
       root.classList.remove('dark')
       document.body.style.backgroundColor = '#ffffff'

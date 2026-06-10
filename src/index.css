@@ -2,28 +2,80 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================================
+   팔레트 CSS 변수 — space-separated RGB (Tailwind <alpha-value> 지원)
+   ================================================================ */
+
+/* ── Palette 1: Sky Blue (기본) ──────────────────────────── */
+:root {
+  /* 고정 (팔레트 전환 불변) */
+  --brand:          3 105 161;    /* #0369A1 */
+  --brand-deep:     8 32 50;      /* #082032 — 다크모드 최심 배경 */
+  --brand-navy:     15 52 96;     /* #0F3460 */
+  --brand-ice:      240 249 255;  /* #F0F9FF */
+  --brand-ice-dark: 186 230 253;  /* #BAE6FD */
+  --surface-dark:   15 52 96;     /* #0F3460 */
+  --surface-dark-2: 22 78 99;     /* #164E63 */
+  /* 팔레트 전환 */
+  --brand-royal:       37 99 235;    /* #2563EB */
+  --brand-royal-light: 59 130 246;   /* #3B82F6 */
+  --brand-sky:         125 211 252;  /* #7DD3FC — 연한 하늘색 */
+  --brand-sky-light:   186 230 253;  /* #BAE6FD */
+}
+
+/* ── Palette 2: Ocean Teal ───────────────────────────────── */
+[data-palette="ocean"] {
+  --brand-royal:       8 145 178;    /* #0891B2 */
+  --brand-royal-light: 6 182 212;    /* #06B6D4 */
+  --brand-sky:         34 211 238;   /* #22D3EE */
+  --brand-sky-light:   103 232 249;  /* #67E8F9 */
+}
+
+/* ── Palette 3: Mint Fresh ───────────────────────────────── */
+[data-palette="mint"] {
+  --brand-royal:       5 150 105;    /* #059669 */
+  --brand-royal-light: 16 185 129;   /* #10B981 */
+  --brand-sky:         52 211 153;   /* #34D399 */
+  --brand-sky-light:   110 231 183;  /* #6EE7B7 */
+}
+
+/* ── Palette 4: Violet ───────────────────────────────────── */
+[data-palette="violet"] {
+  --brand-royal:       124 58 237;   /* #7C3AED */
+  --brand-royal-light: 139 92 246;   /* #8B5CF6 */
+  --brand-sky:         167 139 250;  /* #A78BFA */
+  --brand-sky-light:   196 181 253;  /* #C4B5FD */
+}
+
+/* ── Palette 5: Rose ─────────────────────────────────────── */
+[data-palette="rose"] {
+  --brand-royal:       219 39 119;   /* #DB2777 */
+  --brand-royal-light: 236 72 153;   /* #EC4899 */
+  --brand-sky:         244 114 182;  /* #F472B6 */
+  --brand-sky-light:   249 168 212;  /* #F9A8D4 */
+}
+
+/* ================================================================ */
+
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
   body {
     @apply font-sans antialiased;
     background-color: #ffffff;
-    color: #0B1D3A;
+    color: #0F3460;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   .dark body {
-    background-color: #0B1D3A;
+    background-color: #082032;
     color: #F0F9FF;
   }
-  /* 스크롤바 (Webkit) */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { @apply rounded-full bg-brand-ice-dark dark:bg-white/20; }
 }
 
 @layer components {
-  /* ── 버튼 ─────────────────────────────── */
+  /* ── 버튼 ─────────────────────────── */
   .btn-primary {
     @apply inline-flex items-center gap-2 rounded-full bg-brand-royal px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-brand-royal-light focus:outline-none focus:ring-2 focus:ring-brand-royal focus:ring-offset-2;
   }
@@ -34,15 +86,11 @@
     @apply inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold text-brand-royal transition hover:bg-brand-ice dark:text-brand-sky dark:hover:bg-white/10;
   }
 
-  /* ── 레이아웃 ─────────────────────────── */
-  .section-x {
-    @apply px-4 md:px-10 lg:px-20 xl:px-32;
-  }
-  .section-py {
-    @apply py-20 md:py-28;
-  }
+  /* ── 레이아웃 ─────────────────────── */
+  .section-x  { @apply px-4 md:px-10 lg:px-20 xl:px-32; }
+  .section-py { @apply py-20 md:py-28; }
 
-  /* ── 카드 ─────────────────────────────── */
+  /* ── 카드 ─────────────────────────── */
   .card {
     @apply rounded-2xl bg-white shadow-sm ring-1 ring-brand-ice-dark transition dark:bg-surface-dark dark:ring-white/10;
   }
@@ -50,23 +98,21 @@
     @apply card hover:-translate-y-1 hover:shadow-md hover:ring-brand-royal/30 dark:hover:ring-brand-sky/30;
   }
 
-  /* ── 뱃지 ─────────────────────────────── */
+  /* ── 뱃지 ─────────────────────────── */
   .badge {
     @apply inline-block rounded-full bg-brand-sky/10 px-3 py-0.5 text-xs font-semibold text-brand-sky dark:bg-brand-sky/20;
   }
 
-  /* ── 섹션 제목 ──────────────────────────── */
-  .section-label {
-    @apply mb-3 text-sm font-bold uppercase tracking-widest text-brand-sky;
-  }
+  /* ── 섹션 제목 ──────────────────────── */
+  .section-label { @apply mb-3 text-sm font-bold uppercase tracking-widest text-brand-sky; }
   .section-title {
     @apply text-3xl font-extrabold leading-tight text-brand-deep dark:text-white md:text-4xl lg:text-5xl;
   }
 }
 
-/* ── 히어로 그라디언트 애니메이션 ──── */
+/* ── 히어로 그라디언트 — 연한 하늘색 팔레트 ── */
 .hero-gradient {
-  background: linear-gradient(135deg, #050E1F 0%, #0B1D3A 30%, #1E3A8A 65%, #2563EB 100%);
+  background: linear-gradient(135deg, #082032 0%, #0C4A6E 35%, #1D4ED8 70%, #7DD3FC 100%);
   background-size: 200% 200%;
   animation: gradientX 10s ease infinite;
 }
@@ -77,18 +123,15 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* ── 비디오 카드 hover 효과 ────────── */
-.video-card:hover .play-btn {
-  opacity: 1;
-  transform: scale(1);
-}
+/* ── 비디오 카드 hover ─────────────── */
+.video-card:hover .play-btn { opacity: 1; transform: scale(1); }
 .play-btn {
   opacity: 0;
   transform: scale(0.8);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-/* ── 텍스트 줄바꿈 제한 ─────────────── */
+/* ── 텍스트 줄바꿈 ──────────────────── */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

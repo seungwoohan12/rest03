@@ -23,7 +23,6 @@ function Hero() {
 
   return (
     <section className="relative flex min-h-[90vh] items-center overflow-hidden hero-gradient md:min-h-screen">
-      {/* 배경 장식 원 */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -right-32 -top-32 h-[600px] w-[600px] rounded-full bg-brand-royal/20 blur-3xl" />
         <div className="absolute -bottom-40 -left-20 h-[500px] w-[500px] rounded-full bg-brand-sky/10 blur-3xl" />
@@ -31,7 +30,6 @@ function Hero() {
       </div>
 
       <div className="relative mx-auto w-full max-w-container section-x py-24 md:py-32">
-        {/* 슬라이드 */}
         {slides.map((s, i) => (
           <div
             key={i}
@@ -51,9 +49,7 @@ function Hero() {
               <h1 className="mb-6 whitespace-pre-line text-5xl font-extrabold leading-[1.1] text-white md:text-7xl lg:text-8xl">
                 {s.heading}
               </h1>
-              <p className="mb-10 max-w-xl text-lg text-white/70 md:text-xl">
-                {s.sub}
-              </p>
+              <p className="mb-10 max-w-xl text-lg text-white/70 md:text-xl">{s.sub}</p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/videos/yojeom" className="btn-primary text-base px-8 py-3.5 shadow-lg shadow-brand-royal/30">
                   포트폴리오 보기 →
@@ -66,35 +62,27 @@ function Hero() {
           </div>
         ))}
 
-        {/* 레이아웃 공간 확보 */}
         <div className="invisible">
           <div className="mb-5 inline-flex items-center gap-2 px-4 py-1.5 text-sm">크리에이티브 비디오 스튜디오</div>
           <h1 className="mb-6 whitespace-pre-line text-5xl font-extrabold leading-[1.1] md:text-7xl lg:text-8xl">
             영상으로{'\n'}이야기합니다
           </h1>
-          <p className="mb-10 max-w-xl text-lg md:text-xl">서브텍스트 공간</p>
-          <div className="flex flex-wrap gap-4">
-            <span className="px-8 py-3.5 text-base">포트폴리오 보기 →</span>
-          </div>
+          <p className="mb-10 max-w-xl text-lg md:text-xl">서브텍스트</p>
+          <div className="flex flex-wrap gap-4"><span className="px-8 py-3.5 text-base">포트폴리오 보기 →</span></div>
         </div>
       </div>
 
-      {/* 슬라이드 인디케이터 */}
       <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2">
         {slides.map((_, i) => (
           <button
             key={i}
             type="button"
             onClick={() => setIdx(i)}
-            className={[
-              'h-1.5 rounded-full transition-all duration-300',
-              i === idx ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/60',
-            ].join(' ')}
+            className={['h-1.5 rounded-full transition-all duration-300', i === idx ? 'w-8 bg-white' : 'w-2 bg-white/40 hover:bg-white/60'].join(' ')}
           />
         ))}
       </div>
 
-      {/* 스크롤 힌트 */}
       <div className="absolute bottom-8 right-8 hidden flex-col items-center gap-2 md:flex">
         <span className="text-xs font-medium tracking-widest text-white/40">SCROLL</span>
         <div className="h-8 w-px animate-bounce bg-white/30" />
@@ -148,15 +136,6 @@ function Portfolio() {
       color: 'from-brand-navy to-brand',
       tags:  ['홍보 영상', '숏폼', '클라이언트'],
     },
-    {
-      key:   'ai-related',
-      label: 'AI 교육 콘텐츠',
-      type:  '기획 콘텐츠 시리즈',
-      desc:  'AI 기초부터 리터러시까지 체계적으로 기획한 교육 영상 시리즈. 업로드 준비 중.',
-      icon:  '🤖',
-      color: 'from-brand-royal to-brand-sky',
-      tags:  ['교육 영상', 'AI', '시리즈'],
-    },
   ]
 
   return (
@@ -169,7 +148,7 @@ function Portfolio() {
           영상 프로젝트
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {projects.map((c) => (
             <Link
               key={c.key}
@@ -182,14 +161,12 @@ function Portfolio() {
 
               <div className="relative">
                 <span className="mb-1 block text-xs font-bold uppercase tracking-widest text-white/50">{c.type}</span>
-                <span className="mb-4 block text-4xl">{c.icon}</span>
-                <h3 className="mb-3 text-xl font-extrabold text-white md:text-2xl">{c.label}</h3>
-                <p className="mb-6 text-sm leading-6 text-white/70">{c.desc}</p>
+                <span className="mb-4 block text-5xl">{c.icon}</span>
+                <h3 className="mb-3 text-2xl font-extrabold text-white md:text-3xl">{c.label}</h3>
+                <p className="mb-6 text-sm leading-6 text-white/70 md:text-base">{c.desc}</p>
                 <div className="mb-6 flex flex-wrap gap-2">
                   {c.tags.map((t) => (
-                    <span key={t} className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white">
-                      {t}
-                    </span>
+                    <span key={t} className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white">{t}</span>
                   ))}
                 </div>
                 <span className="inline-flex items-center gap-2 text-sm font-bold text-brand-sky transition group-hover:gap-3">
@@ -204,9 +181,9 @@ function Portfolio() {
   )
 }
 
-// ─── 최근 작업 영상 ─────────────────────────────────────────
+// ─── 최근 제작 영상 ─────────────────────────────────────────
 function RecentWorks() {
-  const gangbukVideos = videos.filter((v) => v.category === 'gangbuk').slice(0, 4)
+  const recent = videos.filter((v) => !v.youtubeId.startsWith('PLACEHOLDER')).slice(0, 4)
   const [hovered, setHovered] = useState(null)
 
   return (
@@ -217,13 +194,11 @@ function RecentWorks() {
             <p className="section-label">Recent Work</p>
             <h2 className="section-title">최근 제작 영상</h2>
           </div>
-          <Link to="/videos/gangbuk" className="btn-ghost self-start text-sm">
-            전체 보기 →
-          </Link>
+          <Link to="/videos/yojeom" className="btn-ghost self-start text-sm">전체 보기 →</Link>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {gangbukVideos.map((v) => (
+          {recent.map((v) => (
             <Link
               key={v.id}
               to={`/videos/${v.category}`}
@@ -231,7 +206,7 @@ function RecentWorks() {
               onMouseEnter={() => setHovered(v.id)}
               onMouseLeave={() => setHovered(null)}
             >
-              <div className={`relative mb-4 overflow-hidden rounded-xl bg-brand-navy ${v.isShort ? 'aspect-[9/16] max-w-[200px] mx-auto' : 'aspect-video'}`}>
+              <div className="relative mb-4 aspect-video overflow-hidden rounded-xl bg-brand-navy">
                 <img
                   src={`https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`}
                   alt={v.title}
@@ -242,7 +217,6 @@ function RecentWorks() {
                   }}
                 />
                 <div className="absolute inset-0 hidden flex-col items-center justify-center bg-gradient-to-br from-brand-deep to-brand p-4 text-center">
-                  <span className="mb-1 text-xs font-semibold text-brand-sky">{v.subCategoryLabel}</span>
                   <span className="text-sm font-bold leading-tight text-white line-clamp-3">{v.title}</span>
                 </div>
                 <div className="play-btn absolute inset-0 flex items-center justify-center bg-black/20">
@@ -252,11 +226,6 @@ function RecentWorks() {
                     </svg>
                   </div>
                 </div>
-                {v.isShort && (
-                  <span className="absolute left-2 top-2 rounded bg-brand-sky/90 px-1.5 py-0.5 text-[10px] font-bold text-white">
-                    Shorts
-                  </span>
-                )}
               </div>
               <span className="badge mb-2">{v.subCategoryLabel}</span>
               <h3 className="text-sm font-bold leading-snug text-brand-deep transition group-hover:text-brand-royal dark:text-white dark:group-hover:text-brand-sky line-clamp-2">
@@ -308,9 +277,7 @@ function Notices() {
             <p className="section-label">Notice</p>
             <h2 className="section-title text-3xl md:text-4xl">새 소식</h2>
           </div>
-          <Link to="/notice" className="btn-ghost self-start text-sm">
-            전체 보기 →
-          </Link>
+          <Link to="/notice" className="btn-ghost self-start text-sm">전체 보기 →</Link>
         </div>
 
         <ul className="divide-y divide-brand-ice-dark dark:divide-white/10">
@@ -333,7 +300,7 @@ function Notices() {
   )
 }
 
-// ─── CTA 배너 ─────────────────────────────────────────────────
+// ─── CTA ─────────────────────────────────────────────────────
 function CtaBanner() {
   return (
     <section className="bg-brand-royal py-16 dark:bg-brand">
@@ -343,16 +310,10 @@ function CtaBanner() {
         </h2>
         <p className="mb-8 text-white/70">포트폴리오를 보고 마음에 드셨다면 편하게 연락해 주세요</p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Link
-            to="/videos/yojeom"
-            className="rounded-full bg-white px-8 py-3.5 font-bold text-brand-royal transition hover:bg-brand-ice"
-          >
+          <Link to="/videos/yojeom" className="rounded-full bg-white px-8 py-3.5 font-bold text-brand-royal transition hover:bg-brand-ice">
             포트폴리오 보기 →
           </Link>
-          <Link
-            to="/contact"
-            className="rounded-full border-2 border-white/40 px-8 py-3.5 font-bold text-white transition hover:border-white hover:bg-white/10"
-          >
+          <Link to="/contact" className="rounded-full border-2 border-white/40 px-8 py-3.5 font-bold text-white transition hover:border-white hover:bg-white/10">
             문의하기
           </Link>
         </div>

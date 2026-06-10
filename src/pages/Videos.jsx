@@ -2,12 +2,11 @@ import { useState, useMemo, useEffect, useCallback } from 'react'
 import { useParams, Navigate, NavLink, useSearchParams, Link } from 'react-router-dom'
 import { videos, videoCategories, videoSubCategories } from '../data/site'
 
-const VIDEOS_PER_PAGE = 6 // 2열 x 3행
+const VIDEOS_PER_PAGE = 6
 
-// placeholder ID인지 판별
 const isPlaceholder = (id) => typeof id === 'string' && id.startsWith('PLACEHOLDER')
 
-// ─── 썸네일 컴포넌트 ─────────────────────────────────────────
+// ─── 썸네일 ──────────────────────────────────────────────────
 function VideoThumbnail({ video }) {
   const [error, setError] = useState(isPlaceholder(video.youtubeId))
   const isShort = video.isShort
@@ -40,7 +39,6 @@ function VideoThumbnail({ video }) {
           </div>
         </div>
       )}
-      {/* Shorts 뱃지 */}
       {isShort && (
         <div className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-black/70 px-2 py-0.5">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="#FF0000">
@@ -49,7 +47,6 @@ function VideoThumbnail({ video }) {
           <span className="text-[9px] font-bold text-white">Shorts</span>
         </div>
       )}
-      {/* 재생 버튼 */}
       {!isPlaceholder(video.youtubeId) && (
         <div className="play-btn absolute inset-0 flex items-center justify-center bg-black/15">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-royal/90 text-white shadow-xl">
@@ -59,7 +56,6 @@ function VideoThumbnail({ video }) {
           </div>
         </div>
       )}
-      {/* 재생 시간 */}
       {video.duration && (
         <div className="absolute bottom-2.5 right-2.5 rounded bg-black/70 px-2 py-0.5 text-xs font-bold text-white">
           {video.duration}
@@ -69,9 +65,10 @@ function VideoThumbnail({ video }) {
   )
 }
 
-// ─── 동영상 모달 ─────────────────────────────────────────────
+// ─── 모달 ────────────────────────────────────────────────────
 function VideoModal({ video, onClose }) {
   const isShort = video.isShort
+  const embedSrc = `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0&modestbranding=1${video.startTime ? `&start=${video.startTime}` : ''}`
 
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
@@ -88,18 +85,12 @@ function VideoModal({ video, onClose }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/88 p-4 glass"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className={[
-        'w-full animate-fade-in-up',
-        isShort ? 'max-w-sm' : 'max-w-4xl',
-      ].join(' ')}>
-        {/* 상단 바 */}
+      <div className={['w-full animate-fade-in-up', isShort ? 'max-w-sm' : 'max-w-4xl'].join(' ')}>
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="badge">{video.subCategoryLabel}</span>
             {isShort && (
-              <span className="rounded-full bg-[#FF0000]/20 px-2 py-0.5 text-xs font-bold text-[#FF4444]">
-                Shorts
-              </span>
+              <span className="rounded-full bg-[#FF0000]/20 px-2 py-0.5 text-xs font-bold text-[#FF4444]">Shorts</span>
             )}
           </div>
           <button
@@ -107,18 +98,12 @@ function VideoModal({ video, onClose }) {
             onClick={onClose}
             aria-label="닫기"
             className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/70 transition hover:bg-white/20 hover:text-white text-xl leading-none"
-          >
-            ✕
-          </button>
+          >✕</button>
         </div>
 
-        {/* YouTube 임베드 */}
-        <div className={[
-          'w-full overflow-hidden rounded-2xl bg-black shadow-2xl',
-          isShort ? 'aspect-[9/16]' : 'aspect-video',
-        ].join(' ')}>
+        <div className={['w-full overflow-hidden rounded-2xl bg-black shadow-2xl', isShort ? 'aspect-[9/16]' : 'aspect-video'].join(' ')}>
           <iframe
-            src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+            src={embedSrc}
             title={video.title}
             className="h-full w-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -126,7 +111,6 @@ function VideoModal({ video, onClose }) {
           />
         </div>
 
-        {/* 영상 정보 */}
         <div className="mt-5 px-1">
           <h2 className="mb-2 text-lg font-bold text-white md:text-xl">{video.title}</h2>
           <p className="text-sm leading-relaxed text-white/60">{video.desc}</p>
@@ -153,10 +137,9 @@ function VideoModal({ video, onClose }) {
   )
 }
 
-// ─── 동영상 카드 ─────────────────────────────────────────────
+// ─── 비디오 카드 ──────────────────────────────────────────────
 function VideoCard({ video, onPlay }) {
   const canPlay = !isPlaceholder(video.youtubeId)
-
   return (
     <article
       className={['group video-card', canPlay ? 'cursor-pointer' : 'cursor-default'].join(' ')}
@@ -229,12 +212,10 @@ export default function Videos() {
   const catInfo = videoCategories.find((c) => c.key === category)
   if (!catInfo) return <Navigate to="/videos/yojeom" replace />
 
-  // 같은 그룹 카테고리만 탭으로 표시
   const groupCats = videoCategories.filter((c) => c.group === catInfo.group)
-
-  const subCats  = videoSubCategories[category] ?? []
-  const subParam = searchParams.get('sub') ?? 'all'
-  const subCat   = subCats.find((s) => s.key === subParam) ? subParam : 'all'
+  const subCats   = videoSubCategories[category] ?? []
+  const subParam  = searchParams.get('sub') ?? 'all'
+  const subCat    = subCats.find((s) => s.key === subParam) ? subParam : 'all'
 
   useEffect(() => { setPage(1) }, [category, subCat])
 
@@ -264,7 +245,7 @@ export default function Videos() {
   return (
     <div className="min-h-screen bg-white transition-colors duration-300 dark:bg-brand-deep">
 
-      {/* ─── 페이지 헤더 ───────────────────────── */}
+      {/* 페이지 헤더 */}
       <div className="bg-gradient-to-br from-brand-deep via-brand to-brand-royal py-20 md:py-28">
         <div className="mx-auto max-w-container section-x">
           <p className="mb-4 flex items-center gap-2 text-xs text-white/50">
@@ -272,9 +253,7 @@ export default function Videos() {
             <span>/</span>
             <span className="text-white/80">{catInfo.label}</span>
           </p>
-          <p className="mb-3 text-sm font-bold uppercase tracking-widest text-brand-sky">
-            {catInfo.group === 'production' ? 'Production' : 'AI Education'}
-          </p>
+          <p className="mb-3 text-sm font-bold uppercase tracking-widest text-brand-sky">Portfolio</p>
           <h1 className="mb-4 text-4xl font-extrabold leading-tight text-white md:text-6xl">
             {catInfo.title}
           </h1>
@@ -282,12 +261,10 @@ export default function Videos() {
         </div>
       </div>
 
-      {/* ─── 탭 네비 (sticky) ──────────────────── */}
+      {/* 탭 네비 */}
       <div className="sticky top-20 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur dark:border-white/10 dark:bg-brand-deep/95">
         <div className="mx-auto max-w-container section-x">
-
-          {/* 그룹 내 대분류 탭 */}
-          <div className="flex gap-0 overflow-x-auto border-b border-neutral-100 dark:border-white/10">
+          <div className="flex gap-0 overflow-x-auto">
             {groupCats.map((c) => (
               <NavLink
                 key={c.key}
@@ -303,26 +280,8 @@ export default function Videos() {
                 {c.shortLabel ?? c.label}
               </NavLink>
             ))}
-
-            {/* 다른 그룹으로 이동 링크 */}
-            {catInfo.group === 'production' ? (
-              <Link
-                to="/videos/ai-related"
-                className="ml-auto whitespace-nowrap border-b-2 border-transparent px-4 py-5 text-sm text-neutral-400 transition hover:text-brand-royal dark:hover:text-brand-sky md:px-7"
-              >
-                AI 교육 영상 →
-              </Link>
-            ) : (
-              <Link
-                to="/videos/yojeom"
-                className="ml-auto whitespace-nowrap border-b-2 border-transparent px-4 py-5 text-sm text-neutral-400 transition hover:text-brand-royal dark:hover:text-brand-sky md:px-7"
-              >
-                ← 제작 영상
-              </Link>
-            )}
           </div>
 
-          {/* 소분류 필터 */}
           {subCats.length > 1 && (
             <div className="flex gap-2 overflow-x-auto py-3">
               {subCats.map((s) => (
@@ -344,7 +303,7 @@ export default function Videos() {
         </div>
       </div>
 
-      {/* ─── 영상 그리드 ────────────────────────── */}
+      {/* 영상 그리드 */}
       <div className="mx-auto max-w-container section-x py-16 md:py-20">
         <p className="mb-8 text-sm text-neutral-500 dark:text-neutral-400">
           총 <span className="font-bold text-brand-royal dark:text-brand-sky">{filtered.length}</span>개
@@ -367,7 +326,6 @@ export default function Videos() {
         )}
       </div>
 
-      {/* ─── 모달 ──────────────────────────────── */}
       {activeVideo && (
         <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
       )}

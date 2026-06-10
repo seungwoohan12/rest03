@@ -3,8 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 
-const KAKAO_JS_KEY = '98a3eca294a2bf155dd7cc2bb16d56a9'
-
 const inputCls = [
   'w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition',
   'focus:border-brand-royal focus:ring-2 focus:ring-brand-royal/20',
@@ -32,13 +30,6 @@ export default function Login() {
   const { user, loading, signIn, signUp } = useAuth()
   const navigate = useNavigate()
 
-  // Kakao SDK 초기화
-  useEffect(() => {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(KAKAO_JS_KEY)
-    }
-  }, [])
-
   useEffect(() => {
     if (!loading && user) navigate('/', { replace: true })
   }, [user, loading, navigate])
@@ -49,32 +40,19 @@ export default function Login() {
     setMessage('')
   }
 
-  // 카카오 JS SDK 로그인
   async function handleKakaoLogin() {
     setError('')
     setBusy(true)
     try {
-      const authObj = await new Promise((resolve, reject) => {
-        window.Kakao.Auth.login({
-          scope: 'openid,profile_nickname',
-          success: resolve,
-          fail: reject,
-        })
-      })
-
-      if (!authObj.id_token) {
-        throw new Error('OpenID Connect가 비활성화 상태입니다. 카카오 개발자 콘솔 → 동의항목 → OpenID Connect ID 토큰을 활성화해주세요.')
-      }
-
-      const { error } = await supabase.auth.signInWithIdToken({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'kakao',
-        token: authObj.id_token,
+        options: {
+          redirectTo: 'https://seungwoohan12.github.io/rest03/',
+        },
       })
       if (error) throw error
-      navigate('/')
     } catch (err) {
-      setError(err.error_description || err.message || '카카오 로그인에 실패했습니다.')
-    } finally {
+      setError(err.message || '카카오 로그인에 실패했습니다.')
       setBusy(false)
     }
   }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { supabase } from '../lib/supabase'
 
 const inputCls = [
   'w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none transition',
@@ -9,8 +10,25 @@ const inputCls = [
   'dark:focus:border-brand-sky dark:focus:ring-brand-sky/20',
 ].join(' ')
 
+function KakaoIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.733 1.617 5.13 4.056 6.574l-.996 3.716a.3.3 0 0 0 .456.326l4.316-2.87A12.3 12.3 0 0 0 12 18.6c5.523 0 10-3.477 10-7.8S17.523 3 12 3z"/>
+    </svg>
+  )
+}
+
+async function signInWithKakao() {
+  await supabase.auth.signInWithOAuth({
+    provider: 'kakao',
+    options: {
+      redirectTo: 'https://seungwoohan12.github.io/rest03/',
+    },
+  })
+}
+
 export default function Login() {
-  const [mode,     setMode]     = useState('login') // 'login' | 'signup'
+  const [mode,     setMode]     = useState('login')
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
   const [nickname, setNickname] = useState('')
@@ -80,8 +98,26 @@ export default function Login() {
         {/* Card */}
         <div className="rounded-2xl bg-white p-8 shadow-xl dark:bg-brand-navy">
 
+          {/* 카카오 로그인 */}
+          <button
+            type="button"
+            onClick={signInWithKakao}
+            className="mb-6 flex w-full items-center justify-center gap-2.5 rounded-xl py-3 text-sm font-bold text-[#3C1E1E] transition hover:brightness-95 active:scale-[0.98]"
+            style={{ backgroundColor: '#FEE500' }}
+          >
+            <KakaoIcon />
+            카카오로 로그인
+          </button>
+
+          {/* 구분선 */}
+          <div className="mb-6 flex items-center gap-3">
+            <hr className="flex-1 border-neutral-200 dark:border-white/10" />
+            <span className="text-xs text-neutral-400">또는 이메일로</span>
+            <hr className="flex-1 border-neutral-200 dark:border-white/10" />
+          </div>
+
           {/* Mode tabs */}
-          <div className="mb-7 flex gap-1 rounded-xl bg-brand-ice p-1 dark:bg-white/10">
+          <div className="mb-6 flex gap-1 rounded-xl bg-brand-ice p-1 dark:bg-white/10">
             {[['login', '로그인'], ['signup', '회원가입']].map(([m, label]) => (
               <button
                 key={m}
@@ -166,7 +202,7 @@ export default function Login() {
         </div>
 
         <p className="mt-6 text-center text-sm text-neutral-400">
-          <Link to="/" className="hover:text-brand-royal dark:hover:text-brand-sky transition">
+          <Link to="/" className="transition hover:text-brand-royal dark:hover:text-brand-sky">
             ← 홈으로 돌아가기
           </Link>
         </p>

@@ -1,21 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { nav, company } from '../data/site'
-import { useTheme } from '../context/ThemeContext'
+import { useTheme }   from '../context/ThemeContext'
 import { usePalette, palettes } from '../context/PaletteContext'
+import { useAuth }    from '../context/AuthContext'
 
 function SunIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" />
-      <line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
     </svg>
   )
 }
@@ -45,9 +42,7 @@ function PaletteSwitcher() {
               ? 'scale-125 ring-2 ring-white ring-offset-1 ring-offset-transparent shadow-lg'
               : 'opacity-70 hover:opacity-100',
           ].join(' ')}
-          style={{
-            background: `linear-gradient(135deg, ${p.royal} 50%, ${p.sky} 50%)`,
-          }}
+          style={{ background: `linear-gradient(135deg, ${p.royal} 50%, ${p.sky} 50%)` }}
         />
       ))}
     </div>
@@ -59,7 +54,7 @@ function MobilePaletteSwitcher() {
   const { paletteId, setPaletteId } = usePalette()
   return (
     <div className="mb-4 rounded-xl bg-brand-ice p-4 dark:bg-white/10">
-      <p className="mb-3 text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">컬러 팔레트</p>
+      <p className="mb-3 text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">컬러 팔레트</p>
       <div className="flex gap-3">
         {palettes.map((p) => (
           <button
@@ -73,9 +68,7 @@ function MobilePaletteSwitcher() {
                 ? 'scale-110 ring-2 ring-brand-royal ring-offset-2 shadow-md dark:ring-brand-sky'
                 : 'opacity-60 hover:opacity-100',
             ].join(' ')}
-            style={{
-              background: `linear-gradient(135deg, ${p.royal} 50%, ${p.sky} 50%)`,
-            }}
+            style={{ background: `linear-gradient(135deg, ${p.royal} 50%, ${p.sky} 50%)` }}
           />
         ))}
       </div>
@@ -83,11 +76,79 @@ function MobilePaletteSwitcher() {
   )
 }
 
+// ─── 유저 메뉴 (데스크탑) ────────────────────────────────────
+function UserMenu() {
+  const { user, profile, signOut } = useAuth()
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    function handleClick(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  if (!user) {
+    return (
+      <Link
+        to="/login"
+        className="hidden rounded-full border border-neutral-200 px-4 py-2 text-sm font-semibold text-neutral-600 transition hover:border-brand-royal hover:text-brand-royal dark:border-white/20 dark:text-neutral-300 dark:hover:border-brand-sky dark:hover:text-brand-sky lg:inline-flex"
+      >
+        로그인
+      </Link>
+    )
+  }
+
+  const displayName = profile?.nickname ?? user.email?.split('@')[0] ?? '사용자'
+
+  return (
+    <div ref={ref} className="relative hidden lg:block">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-2 rounded-full border border-neutral-200 px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-brand-royal hover:text-brand-royal dark:border-white/20 dark:text-neutral-300 dark:hover:border-brand-sky dark:hover:text-brand-sky"
+      >
+        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-royal text-xs font-black text-white">
+          {displayName.charAt(0).toUpperCase()}
+        </span>
+        {displayName}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-44 rounded-xl border border-neutral-100 bg-white py-1 shadow-xl dark:border-white/10 dark:bg-brand-navy">
+          <Link
+            to="/board"
+            onClick={() => setOpen(false)}
+            className="block px-4 py-2.5 text-sm text-neutral-700 transition hover:bg-brand-ice hover:text-brand-royal dark:text-neutral-300 dark:hover:bg-white/10 dark:hover:text-brand-sky"
+          >
+            자유 게시판
+          </Link>
+          <hr className="my-1 border-neutral-100 dark:border-white/10" />
+          <button
+            type="button"
+            onClick={() => { signOut(); setOpen(false) }}
+            className="w-full px-4 py-2.5 text-left text-sm text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/10"
+          >
+            로그아웃
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ─── 메인 헤더 ───────────────────────────────────────────────
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [hovered,    setHovered]    = useState(null)
   const [scrolled,   setScrolled]   = useState(false)
   const { isDark, toggleTheme } = useTheme()
+  const { user, profile, signOut } = useAuth()
   const location = useLocation()
 
   useEffect(() => {
@@ -105,6 +166,8 @@ export default function Header() {
       : 'bg-white dark:bg-brand-deep',
   ].join(' ')
 
+  const mobileDisplayName = profile?.nickname ?? user?.email?.split('@')[0] ?? ''
+
   return (
     <header className={headerBase} onMouseLeave={() => setHovered(null)}>
 
@@ -112,8 +175,8 @@ export default function Header() {
       <div className="mx-auto flex h-20 max-w-container items-center justify-between border-b border-brand-ice-dark px-4 dark:border-white/10 md:px-10 lg:px-20">
 
         {/* 로고 */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-royal text-white text-base font-black group-hover:bg-brand-royal-light transition">
+        <Link to="/" className="group flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-royal text-base font-black text-white transition group-hover:bg-brand-royal-light">
             H
           </span>
           <span className="text-xl font-extrabold tracking-tight text-brand dark:text-white">
@@ -158,12 +221,15 @@ export default function Header() {
             {isDark ? <SunIcon /> : <MoonIcon />}
           </button>
 
-          {/* 팔레트 스위처 — 문의하기 버튼 왼쪽 */}
+          {/* 팔레트 스위처 */}
           <div className="hidden lg:flex items-center gap-2">
             <div className="h-4 w-px bg-neutral-200 dark:bg-white/20" />
             <PaletteSwitcher />
             <div className="h-4 w-px bg-neutral-200 dark:bg-white/20" />
           </div>
+
+          {/* 유저 메뉴 or 로그인 */}
+          <UserMenu />
 
           {/* 문의하기 (데스크탑) */}
           <Link
@@ -180,9 +246,9 @@ export default function Header() {
             className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] lg:hidden"
             onClick={() => setMobileOpen(true)}
           >
-            <span className="h-0.5 w-5 rounded-full bg-neutral-700 dark:bg-neutral-300 transition" />
-            <span className="h-0.5 w-5 rounded-full bg-neutral-700 dark:bg-neutral-300 transition" />
-            <span className="h-0.5 w-5 rounded-full bg-neutral-700 dark:bg-neutral-300 transition" />
+            <span className="h-0.5 w-5 rounded-full bg-neutral-700 transition dark:bg-neutral-300" />
+            <span className="h-0.5 w-5 rounded-full bg-neutral-700 transition dark:bg-neutral-300" />
+            <span className="h-0.5 w-5 rounded-full bg-neutral-700 transition dark:bg-neutral-300" />
           </button>
         </div>
       </div>
@@ -221,11 +287,9 @@ export default function Header() {
       {/* ─── 모바일 슬라이드 패널 ─────────────── */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setMobileOpen(false)}
-          />
+          <div className="absolute inset-0 bg-black/50" onClick={() => setMobileOpen(false)} />
           <div className="absolute right-0 top-0 h-full w-4/5 max-w-sm overflow-y-auto bg-white p-6 shadow-2xl dark:bg-brand-navy">
+
             <div className="mb-8 flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-royal text-sm font-black text-white">H</span>
@@ -277,7 +341,31 @@ export default function Header() {
               ))}
             </ul>
 
-            <Link to="/contact" className="btn-primary mt-6 w-full justify-center">
+            {/* 로그인/로그아웃 (모바일) */}
+            <div className="mt-6 border-t border-neutral-100 pt-4 dark:border-white/10">
+              {user ? (
+                <div className="flex flex-col gap-2">
+                  <p className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">
+                    {mobileDisplayName} 님
+                  </p>
+                  <button
+                    onClick={() => { signOut(); setMobileOpen(false) }}
+                    className="w-full rounded-full border border-red-300 py-2.5 text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10"
+                  >
+                    로그아웃
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="block w-full rounded-full border border-brand-royal py-2.5 text-center text-sm font-semibold text-brand-royal hover:bg-brand-royal hover:text-white dark:border-brand-sky dark:text-brand-sky"
+                >
+                  로그인
+                </Link>
+              )}
+            </div>
+
+            <Link to="/contact" className="btn-primary mt-3 w-full justify-center">
               문의하기
             </Link>
           </div>

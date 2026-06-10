@@ -34,6 +34,7 @@ export const company = {
   ],
   footerLinks: [
     { label: '포트폴리오', to: '/videos/yojeom' },
+    { label: '게시판',     to: '/board' },
     { label: '문의하기',   to: '/contact' },
   ],
 }
@@ -56,6 +57,13 @@ export const nav = [
     children: [
       { label: '요즘 것들의 돈버는 이야기', to: '/videos/yojeom' },
       { label: '서울청년센터 강북',         to: '/videos/gangbuk' },
+    ],
+  },
+  {
+    label: '게시판',
+    to: '/board',
+    children: [
+      { label: '자유 게시판', to: '/board' },
     ],
   },
   {

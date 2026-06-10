@@ -76,7 +76,7 @@ function MobilePaletteSwitcher() {
   )
 }
 
-// ─── 유저 메뉴 (데스크탑) ────────────────────────────────────
+// ─── 유저 메뉴 (데스크탑) — 문의하기 오른쪽에 표시 ──────────
 function UserMenu() {
   const { user, profile, signOut } = useAuth()
   const [open, setOpen] = useState(false)
@@ -94,7 +94,7 @@ function UserMenu() {
     return (
       <Link
         to="/login"
-        className="hidden rounded-full border border-neutral-200 px-4 py-2 text-sm font-semibold text-neutral-600 transition hover:border-brand-royal hover:text-brand-royal dark:border-white/20 dark:text-neutral-300 dark:hover:border-brand-sky dark:hover:text-brand-sky lg:inline-flex"
+        className="rounded-full border border-brand-royal px-5 py-2.5 text-sm font-semibold text-brand-royal transition hover:bg-brand-royal hover:text-white dark:border-brand-sky dark:text-brand-sky dark:hover:bg-brand-sky dark:hover:text-brand-deep"
       >
         로그인
       </Link>
@@ -104,16 +104,16 @@ function UserMenu() {
   const displayName = profile?.nickname ?? user.email?.split('@')[0] ?? '사용자'
 
   return (
-    <div ref={ref} className="relative hidden lg:block">
+    <div ref={ref} className="relative">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-full border border-neutral-200 px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-brand-royal hover:text-brand-royal dark:border-white/20 dark:text-neutral-300 dark:hover:border-brand-sky dark:hover:text-brand-sky"
+        className="flex items-center gap-2 rounded-full border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:border-brand-royal hover:text-brand-royal dark:border-white/20 dark:text-neutral-300 dark:hover:border-brand-sky dark:hover:text-brand-sky"
       >
         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-royal text-xs font-black text-white">
           {displayName.charAt(0).toUpperCase()}
         </span>
-        {displayName}
+        <span className="max-w-[80px] truncate">{displayName}</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <polyline points="6 9 12 15 18 9" />
         </svg>
@@ -228,9 +228,6 @@ export default function Header() {
             <div className="h-4 w-px bg-neutral-200 dark:bg-white/20" />
           </div>
 
-          {/* 유저 메뉴 or 로그인 */}
-          <UserMenu />
-
           {/* 문의하기 (데스크탑) */}
           <Link
             to="/contact"
@@ -238,6 +235,11 @@ export default function Header() {
           >
             문의하기
           </Link>
+
+          {/* 로그인 / 유저 메뉴 — 문의하기 오른쪽 (데스크탑) */}
+          <div className="hidden lg:block">
+            <UserMenu />
+          </div>
 
           {/* 햄버거 (모바일) */}
           <button

@@ -58,9 +58,7 @@ export default function Header() {
 
         {/* 로고 */}
         <Link to="/" className="flex items-center gap-2 group">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-royal text-white text-base font-black group-hover:bg-brand-royal-light transition">
-            AI
-          </span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-royal text-white text-base font-black group-hover:bg-brand-royal-light transition">H</span>
           <span className="text-xl font-extrabold tracking-tight text-brand dark:text-white">
             {company.name}
           </span>
@@ -167,7 +165,7 @@ export default function Header() {
             {/* 패널 헤더 */}
             <div className="mb-8 flex items-center justify-between">
               <Link to="/" className="flex items-center gap-2">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-royal text-sm font-black text-white">AI</span>
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-royal text-sm font-black text-white">H</span>
                 <span className="text-lg font-extrabold text-brand dark:text-white">{company.name}</span>
               </Link>
               <button

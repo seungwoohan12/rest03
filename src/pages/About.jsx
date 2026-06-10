@@ -3,15 +3,15 @@ import { company, instructors } from '../data/site'
 
 const tabs = [
   { label: '소개',       to: '/about/intro' },
-  { label: '교육 철학',  to: '/about/philosophy' },
-  { label: '강사진',     to: '/about/instructors' },
+  { label: '작업 철학',  to: '/about/philosophy' },
+  { label: '멤버',       to: '/about/instructors' },
   { label: '연혁',       to: '/about/history' },
 ]
 
 const history = [
-  { year: '2026', events: ['AILearn 사이트 오픈', 'AI 리터러시 시리즈 1차 강의 공개', '유튜브 채널 구독자 1만 명 돌파'] },
-  { year: '2025', events: ['AILearn Education Center 설립', 'AI 기초 강의 시리즈 제작 착수', 'AI 전문 강사진 3명 영입'] },
-  { year: '2024', events: ['AI 교육 콘텐츠 연구 시작', '교육 철학 및 커리큘럼 설계'] },
+  { year: '2026', events: ['HANU 포트폴리오 사이트 오픈', '서울청년센터 강북 영상 6편 제작 완료', 'AI 교육 콘텐츠 시리즈 기획'] },
+  { year: '2025', events: ['요즘 것들의 돈버는 이야기 시리즈 기획·제작 착수', 'HANU Creative Studio 창업', '첫 클라이언트 영상 제작'] },
+  { year: '2024', events: ['영상 콘텐츠 제작 연구 및 포트폴리오 준비', '크리에이티브 비전 수립'] },
 ]
 
 function PageShell({ titleEn, titleKo, children }) {
@@ -47,9 +47,9 @@ function PageShell({ titleEn, titleKo, children }) {
           <p className="mb-2 flex items-center gap-2 text-xs text-white/50">
             <Link to="/" className="hover:text-white transition">홈</Link>
             <span>/</span>
-            <span className="text-white/80">회사소개</span>
+            <span className="text-white/80">HANU 소개</span>
           </p>
-          <p className="mb-3 text-sm font-bold uppercase tracking-widest text-brand-sky">About Us</p>
+          <p className="mb-3 text-sm font-bold uppercase tracking-widest text-brand-sky">About HANU</p>
           <h1 className="text-4xl font-extrabold text-white md:text-6xl">{titleEn}</h1>
           {titleKo && <p className="mt-3 text-lg text-white/60">{titleKo}</p>}
         </div>
@@ -67,12 +67,11 @@ function PageShell({ titleEn, titleKo, children }) {
 function Intro() {
   return (
     <div className="flex flex-col gap-16 lg:flex-row lg:gap-24">
-      {/* 텍스트 */}
       <div className="flex-1">
         <h2 className="mb-8 text-3xl font-extrabold leading-snug text-brand-deep dark:text-white md:text-4xl">
-          AI를 누구나 이해하는
+          영상으로 연결하는
           <br />
-          <span className="text-brand-royal">공평한 미래</span>를 만듭니다
+          <span className="text-brand-royal">브랜드와 사람</span>의 이야기
         </h2>
         {company.intro.map((p, i) => (
           <p key={i} className="mb-5 text-base leading-8 text-neutral-600 dark:text-neutral-300">
@@ -80,21 +79,19 @@ function Intro() {
           </p>
         ))}
         <div className="mt-8 flex flex-wrap gap-4">
-          <Link to="/videos/ai-related" className="btn-primary">AI 관련 영상 →</Link>
-          <Link to="/contact"           className="btn-secondary">문의하기</Link>
+          <Link to="/videos/yojeom" className="btn-primary">포트폴리오 보기 →</Link>
+          <Link to="/contact"       className="btn-secondary">제작 문의</Link>
         </div>
       </div>
 
       {/* 연락처 카드 */}
       <div className="lg:w-80">
         <div className="card rounded-2xl p-6 dark:bg-surface-dark">
-          <h3 className="mb-5 text-base font-bold text-brand-deep dark:text-white">연락처 정보</h3>
+          <h3 className="mb-5 text-base font-bold text-brand-deep dark:text-white">연락처</h3>
           <ul className="flex flex-col gap-4 text-sm">
             {[
-              { icon: '📍', label: '주소',    val: company.contact.address },
-              { icon: '📞', label: '전화',    val: company.contact.tel },
-              { icon: '✉️', label: '이메일',  val: company.contact.email },
-              { icon: '⏰', label: '운영시간', val: company.contact.hours },
+              { icon: '📍', label: '위치',   val: company.contact.address },
+              { icon: '✉️', label: '이메일', val: company.contact.email },
             ].map((r) => (
               <li key={r.label} className="flex gap-3">
                 <span className="mt-0.5 shrink-0 text-base">{r.icon}</span>
@@ -105,25 +102,39 @@ function Intro() {
               </li>
             ))}
           </ul>
+          {/* 소셜 링크 */}
+          <div className="mt-6 flex gap-3">
+            {company.social.map((s) => (
+              <a
+                key={s.name}
+                href={s.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs font-semibold text-brand-royal transition hover:text-brand-sky dark:text-brand-sky"
+              >
+                {s.label}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-// ─── 교육 철학 탭 ────────────────────────────────────────────
+// ─── 작업 철학 탭 ────────────────────────────────────────────
 function Philosophy() {
   const values = [
-    { icon: '🌍', title: '접근성', desc: 'AI 교육의 문턱을 낮추어 누구나 AI를 이해하고 활용할 수 있도록 합니다.' },
-    { icon: '🔍', title: '비판적 사고', desc: '기술을 맹목적으로 수용하지 않고 비판적으로 이해하는 능력을 기릅니다.' },
-    { icon: '⚖️', title: '윤리적 AI', desc: '공정하고 책임 있는 AI 활용 방법과 윤리 의식을 함께 교육합니다.' },
-    { icon: '🚀', title: '실천 중심', desc: '이론에 그치지 않고 실생활과 업무에 바로 적용할 수 있는 실용적 교육을 제공합니다.' },
+    { icon: '🎯', title: '스토리텔링',   desc: '모든 영상은 하나의 이야기입니다. 기술보다 이야기를 먼저 생각하고, 전달하고자 하는 메시지를 영상의 핵심에 둡니다.' },
+    { icon: '✨', title: '진정성',       desc: '꾸미지 않은 진짜 이야기를 담습니다. 연출보다 순간을, 완벽함보다 진심을 더 중요하게 여깁니다.' },
+    { icon: '🔧', title: '품질',         desc: '기획부터 촬영, 편집까지 모든 과정에서 타협하지 않습니다. 작은 디테일이 영상의 완성도를 결정합니다.' },
+    { icon: '🤝', title: '클라이언트 협업', desc: '영상은 함께 만드는 것입니다. 클라이언트의 비전을 이해하고, 소통하며, 기대 이상의 결과물을 만들어냅니다.' },
   ]
   return (
     <div>
       <p className="mb-12 max-w-2xl text-lg leading-8 text-neutral-600 dark:text-neutral-300">
-        AILearn은 AI 기술을 특정 전문가만의 것이 아닌, 모든 사람이 이해하고 활용할 수 있는
-        공공재로 만들고자 합니다. 이를 위해 네 가지 핵심 교육 가치를 기반으로 콘텐츠를 제작합니다.
+        HANU는 영상을 단순한 콘텐츠가 아닌, 브랜드와 사람을 연결하는 언어로 바라봅니다.
+        네 가지 작업 철학을 기반으로 모든 프로젝트에 임합니다.
       </p>
       <div className="grid gap-6 sm:grid-cols-2">
         {values.map((v) => (
@@ -141,21 +152,21 @@ function Philosophy() {
   )
 }
 
-// ─── 강사진 탭 ──────────────────────────────────────────────
-function Instructors() {
+// ─── 멤버 탭 ────────────────────────────────────────────────
+function Members() {
   return (
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {instructors.map((ins) => (
+      {instructors.map((m) => (
         <div
-          key={ins.id}
+          key={m.id}
           className="card rounded-2xl p-8 text-center transition hover:-translate-y-1 hover:shadow-md dark:bg-surface-dark"
         >
           <div className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-royal text-3xl font-extrabold text-white shadow-lg">
-            {ins.name[0]}
+            {m.name[0]}
           </div>
-          <h3 className="mb-1 text-lg font-extrabold text-brand-deep dark:text-white">{ins.name}</h3>
-          <p className="mb-4 text-xs font-semibold text-brand-royal dark:text-brand-sky">{ins.title}</p>
-          <p className="text-sm leading-7 text-neutral-500 dark:text-neutral-400">{ins.bio}</p>
+          <h3 className="mb-1 text-lg font-extrabold text-brand-deep dark:text-white">{m.name}</h3>
+          <p className="mb-4 text-xs font-semibold text-brand-royal dark:text-brand-sky">{m.title}</p>
+          <p className="text-sm leading-7 text-neutral-500 dark:text-neutral-400">{m.bio}</p>
         </div>
       ))}
     </div>
@@ -166,18 +177,15 @@ function Instructors() {
 function History() {
   return (
     <div className="relative">
-      {/* 세로 선 */}
       <div className="absolute left-[2.25rem] top-0 bottom-0 w-px bg-brand-ice-dark dark:bg-white/10 hidden md:block" />
       <div className="flex flex-col gap-10">
         {history.map((h) => (
           <div key={h.year} className="flex gap-8">
-            {/* 연도 */}
             <div className="relative hidden shrink-0 flex-col items-center md:flex">
               <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-royal text-xs font-black text-white shadow">
                 {h.year.slice(-2)}
               </div>
             </div>
-            {/* 내용 */}
             <div className="flex-1 border-b border-brand-ice-dark pb-8 dark:border-white/10">
               <h3 className="mb-4 text-3xl font-extrabold text-brand-royal dark:text-brand-sky md:hidden">
                 {h.year}
@@ -201,12 +209,11 @@ function History() {
   )
 }
 
-// ─── 메인 About 컴포넌트 ────────────────────────────────────
 const pageMeta = {
-  intro:        { en: 'About Us',       ko: '에이아이런을 소개합니다' },
-  philosophy:   { en: 'Philosophy',     ko: '우리의 교육 철학' },
-  instructors:  { en: 'Instructors',    ko: '전문 강사진' },
-  history:      { en: 'History',        ko: 'AILearn의 발자취' },
+  intro:        { en: 'About Us',      ko: 'HANU를 소개합니다' },
+  philosophy:   { en: 'Philosophy',   ko: '우리의 작업 철학' },
+  instructors:  { en: 'Members',      ko: 'HANU 멤버' },
+  history:      { en: 'History',      ko: 'HANU의 발자취' },
 }
 
 export default function About() {
@@ -218,7 +225,7 @@ export default function About() {
     <PageShell titleEn={meta.en} titleKo={meta.ko}>
       {tab === 'intro'       && <Intro />}
       {tab === 'philosophy'  && <Philosophy />}
-      {tab === 'instructors' && <Instructors />}
+      {tab === 'instructors' && <Members />}
       {tab === 'history'     && <History />}
     </PageShell>
   )

@@ -30,7 +30,7 @@ export default function Footer() {
           {/* 브랜드 정보 */}
           <div className="flex-shrink-0 lg:w-64">
             <Link to="/" className="flex items-center gap-2 mb-5">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-royal text-white font-black">AI</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-royal text-white font-black">H</span>
               <span className="text-2xl font-extrabold text-white">{company.name}</span>
             </Link>
             <p className="mb-6 text-sm leading-6 text-white/60">{company.tagline}</p>

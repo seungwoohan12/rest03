@@ -7,12 +7,12 @@ function Hero() {
   const [idx, setIdx] = useState(0)
   const slides = [
     {
-      heading: 'AI 시대를\n앞서가는 교육',
-      sub:     'AI 기초부터 실전 활용까지, 누구나 이해할 수 있는 온라인 강의',
+      heading: '영상으로\n이야기합니다',
+      sub:     '브랜드의 이야기를, 공간의 매력을, 사람의 진심을 — HANU가 영상으로 담습니다',
     },
     {
-      heading: 'AI 리터러시로\n미래를 준비하세요',
-      sub:     '인공지능을 올바르게 이해하고 비판적으로 사고하는 역량을 키웁니다',
+      heading: '당신의 이야기를\n담습니다',
+      sub:     '인터뷰 · 홍보 영상 · 숏폼 콘텐츠 — 모든 형식의 영상을 기획부터 제작까지',
     },
   ]
 
@@ -46,7 +46,7 @@ function Hero() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-sky opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-sky" />
                 </span>
-                AI 교육 전문 플랫폼
+                크리에이티브 비디오 스튜디오
               </div>
               <h1 className="mb-6 whitespace-pre-line text-5xl font-extrabold leading-[1.1] text-white md:text-7xl lg:text-8xl">
                 {s.heading}
@@ -55,26 +55,26 @@ function Hero() {
                 {s.sub}
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/videos/ai-related" className="btn-primary text-base px-8 py-3.5 shadow-lg shadow-brand-royal/30">
-                  강의 영상 보기 →
+                <Link to="/videos/yojeom" className="btn-primary text-base px-8 py-3.5 shadow-lg shadow-brand-royal/30">
+                  포트폴리오 보기 →
                 </Link>
                 <Link to="/about/intro" className="inline-flex items-center gap-2 rounded-full border-2 border-white/30 px-8 py-3.5 text-base font-semibold text-white transition hover:border-white/60 hover:bg-white/10">
-                  AILearn 소개
+                  HANU 소개
                 </Link>
               </div>
             </div>
           </div>
         ))}
 
-        {/* 현재 슬라이드 내용 (레이아웃 공간 확보용) */}
+        {/* 레이아웃 공간 확보 */}
         <div className="invisible">
-          <div className="mb-5 inline-flex items-center gap-2 px-4 py-1.5 text-sm">AI 교육 전문 플랫폼</div>
+          <div className="mb-5 inline-flex items-center gap-2 px-4 py-1.5 text-sm">크리에이티브 비디오 스튜디오</div>
           <h1 className="mb-6 whitespace-pre-line text-5xl font-extrabold leading-[1.1] md:text-7xl lg:text-8xl">
-            AI 시대를{'\n'}앞서가는 교육
+            영상으로{'\n'}이야기합니다
           </h1>
           <p className="mb-10 max-w-xl text-lg md:text-xl">서브텍스트 공간</p>
           <div className="flex flex-wrap gap-4">
-            <span className="px-8 py-3.5 text-base">강의 영상 보기 →</span>
+            <span className="px-8 py-3.5 text-base">포트폴리오 보기 →</span>
           </div>
         </div>
       </div>
@@ -106,10 +106,10 @@ function Hero() {
 // ─── 숫자 통계 ────────────────────────────────────────────────
 function Stats() {
   const stats = [
-    { num: '16+',  label: '온라인 강의' },
-    { num: '2개',  label: '핵심 분야' },
-    { num: '100%', label: '무료 공개' },
-    { num: '24/7', label: '언제든 수강' },
+    { num: '10+',  label: '제작 영상' },
+    { num: '2개',  label: '진행 프로젝트' },
+    { num: '1:1',  label: '맞춤 제작' },
+    { num: '100%', label: '직접 기획·편집' },
   ]
   return (
     <section className="bg-brand-royal py-14 dark:bg-brand">
@@ -127,67 +127,73 @@ function Stats() {
   )
 }
 
-// ─── 카테고리 카드 ─────────────────────────────────────────────
-function Categories() {
-  const cats = [
+// ─── 포트폴리오 카드 ─────────────────────────────────────────
+function Portfolio() {
+  const projects = [
     {
-      key:   'ai-related',
-      label: 'AI 관련 영상',
-      desc:  'AI 기초 개념부터 ChatGPT 활용법, 최신 AI 트렌드까지 실용적인 강의를 제공합니다.',
-      icon:  '🤖',
+      key:   'yojeom',
+      label: '요즘 것들의 돈버는 이야기',
+      type:  '자체 기획 시리즈',
+      desc:  '젊은 창업가들의 리얼한 창업 스토리. 인터뷰 다큐멘터리 형식으로 기획·촬영·편집까지 HANU가 직접 제작.',
+      icon:  '🎬',
       color: 'from-brand to-brand-royal',
-      tags:  ['AI 기초', 'AI 도구', 'AI 트렌드'],
+      tags:  ['인터뷰', '다큐멘터리', '자체 제작'],
     },
     {
-      key:   'ai-literacy',
-      label: 'AI 리터러시',
-      desc:  'AI 윤리, 데이터 사고, 비판적 미디어 리터러시 등 AI 시대 필수 교양을 다룹니다.',
-      icon:  '📚',
+      key:   'gangbuk',
+      label: '서울청년센터 강북',
+      type:  '클라이언트 의뢰 제작',
+      desc:  '서울청년센터 강북의 공간 홍보, 오시는길, 지원사업 안내 영상. 숏폼·일반 영상 총 6편 제작.',
+      icon:  '🏢',
       color: 'from-brand-navy to-brand',
-      tags:  ['AI 이해', '데이터 사고', 'AI 윤리'],
+      tags:  ['홍보 영상', '숏폼', '클라이언트'],
+    },
+    {
+      key:   'ai-related',
+      label: 'AI 교육 콘텐츠',
+      type:  '기획 콘텐츠 시리즈',
+      desc:  'AI 기초부터 리터러시까지 체계적으로 기획한 교육 영상 시리즈. 업로드 준비 중.',
+      icon:  '🤖',
+      color: 'from-brand-royal to-brand-sky',
+      tags:  ['교육 영상', 'AI', '시리즈'],
     },
   ]
 
   return (
     <section className="section-py bg-brand-ice dark:bg-brand-navy">
       <div className="mx-auto max-w-container section-x">
-        <p className="section-label">강의 분야</p>
+        <p className="section-label">Portfolio</p>
         <h2 className="section-title mb-12">
-          두 가지 핵심 분야로
+          HANU가 만든
           <br />
-          체계적으로 배웁니다
+          영상 프로젝트
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {cats.map((c) => (
+        <div className="grid gap-6 md:grid-cols-3">
+          {projects.map((c) => (
             <Link
               key={c.key}
               to={`/videos/${c.key}`}
               className="group relative overflow-hidden rounded-2xl p-8 transition hover:-translate-y-1 hover:shadow-xl"
             >
-              {/* 그라데이션 배경 */}
               <div className={`absolute inset-0 bg-gradient-to-br ${c.color} opacity-90 transition group-hover:opacity-100`} />
-
-              {/* 배경 장식 */}
               <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/5" />
               <div className="absolute -bottom-6 right-12 h-24 w-24 rounded-full bg-white/5" />
 
               <div className="relative">
-                <span className="mb-4 block text-5xl">{c.icon}</span>
-                <h3 className="mb-3 text-2xl font-extrabold text-white md:text-3xl">{c.label}</h3>
-                <p className="mb-6 text-sm leading-6 text-white/70 md:text-base">{c.desc}</p>
+                <span className="mb-1 block text-xs font-bold uppercase tracking-widest text-white/50">{c.type}</span>
+                <span className="mb-4 block text-4xl">{c.icon}</span>
+                <h3 className="mb-3 text-xl font-extrabold text-white md:text-2xl">{c.label}</h3>
+                <p className="mb-6 text-sm leading-6 text-white/70">{c.desc}</p>
                 <div className="mb-6 flex flex-wrap gap-2">
                   {c.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white"
-                    >
+                    <span key={t} className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white">
                       {t}
                     </span>
                   ))}
                 </div>
                 <span className="inline-flex items-center gap-2 text-sm font-bold text-brand-sky transition group-hover:gap-3">
-                  강의 목록 보기 <span className="text-lg">→</span>
+                  영상 보기 <span className="text-lg">→</span>
                 </span>
               </div>
             </Link>
@@ -198,9 +204,9 @@ function Categories() {
   )
 }
 
-// ─── 최신 강의 영상 ─────────────────────────────────────────────
-function LatestVideos() {
-  const latest = videos.slice(0, 4)
+// ─── 최근 작업 영상 ─────────────────────────────────────────
+function RecentWorks() {
+  const gangbukVideos = videos.filter((v) => v.category === 'gangbuk').slice(0, 4)
   const [hovered, setHovered] = useState(null)
 
   return (
@@ -208,19 +214,16 @@ function LatestVideos() {
       <div className="mx-auto max-w-container section-x">
         <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="section-label">최신 강의</p>
-            <h2 className="section-title">최신 업로드 영상</h2>
+            <p className="section-label">Recent Work</p>
+            <h2 className="section-title">최근 제작 영상</h2>
           </div>
-          <Link
-            to="/videos/ai-related"
-            className="btn-ghost self-start text-sm"
-          >
+          <Link to="/videos/gangbuk" className="btn-ghost self-start text-sm">
             전체 보기 →
           </Link>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {latest.map((v) => (
+          {gangbukVideos.map((v) => (
             <Link
               key={v.id}
               to={`/videos/${v.category}`}
@@ -228,8 +231,7 @@ function LatestVideos() {
               onMouseEnter={() => setHovered(v.id)}
               onMouseLeave={() => setHovered(null)}
             >
-              {/* 썸네일 */}
-              <div className="relative mb-4 aspect-video overflow-hidden rounded-xl bg-brand-navy">
+              <div className={`relative mb-4 overflow-hidden rounded-xl bg-brand-navy ${v.isShort ? 'aspect-[9/16] max-w-[200px] mx-auto' : 'aspect-video'}`}>
                 <img
                   src={`https://img.youtube.com/vi/${v.youtubeId}/hqdefault.jpg`}
                   alt={v.title}
@@ -239,14 +241,10 @@ function LatestVideos() {
                     e.currentTarget.nextSibling.style.display = 'flex'
                   }}
                 />
-                {/* 썸네일 로드 실패 시 폴백 */}
-                <div
-                  className="absolute inset-0 hidden flex-col items-center justify-center bg-gradient-to-br from-brand-deep to-brand p-4 text-center"
-                >
+                <div className="absolute inset-0 hidden flex-col items-center justify-center bg-gradient-to-br from-brand-deep to-brand p-4 text-center">
                   <span className="mb-1 text-xs font-semibold text-brand-sky">{v.subCategoryLabel}</span>
                   <span className="text-sm font-bold leading-tight text-white line-clamp-3">{v.title}</span>
                 </div>
-                {/* 재생 버튼 */}
                 <div className="play-btn absolute inset-0 flex items-center justify-center bg-black/20">
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-royal/90 text-white shadow-lg">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
@@ -254,13 +252,12 @@ function LatestVideos() {
                     </svg>
                   </div>
                 </div>
-                {/* 재생 시간 */}
-                <span className="absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-xs font-semibold text-white">
-                  {v.duration}
-                </span>
+                {v.isShort && (
+                  <span className="absolute left-2 top-2 rounded bg-brand-sky/90 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                    Shorts
+                  </span>
+                )}
               </div>
-
-              {/* 카드 정보 */}
               <span className="badge mb-2">{v.subCategoryLabel}</span>
               <h3 className="text-sm font-bold leading-snug text-brand-deep transition group-hover:text-brand-royal dark:text-white dark:group-hover:text-brand-sky line-clamp-2">
                 {v.title}
@@ -283,18 +280,18 @@ function MissionBand() {
         <div className="absolute right-0 top-1/2 h-96 w-96 translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-sky/10 blur-3xl" />
       </div>
       <div className="relative mx-auto max-w-container section-x text-center">
-        <p className="section-label">Our Mission</p>
+        <p className="section-label">Our Story</p>
         <h2 className="mb-6 text-3xl font-extrabold text-white md:text-5xl lg:text-6xl">
-          AI를 두려움이 아닌
+          영상 하나가
           <br />
-          기회로 만드는 교육
+          이야기가 됩니다
         </h2>
         <p className="mx-auto mb-10 max-w-2xl text-lg text-white/60 leading-8">
-          누구나 AI를 이해하고 활용할 수 있는 세상을 만들기 위해,
-          AILearn은 체계적이고 접근하기 쉬운 AI 교육 콘텐츠를 제공합니다.
+          제품이 아닌 이야기를, 데이터가 아닌 감동을.
+          HANU는 브랜드와 사람 사이의 연결을 영상으로 만듭니다.
         </p>
         <Link to="/about/intro" className="btn-secondary border-white/40 text-white hover:bg-white hover:text-brand-deep">
-          AILearn 더 알아보기 →
+          HANU 더 알아보기 →
         </Link>
       </div>
     </section>
@@ -309,7 +306,7 @@ function Notices() {
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="section-label">Notice</p>
-            <h2 className="section-title text-3xl md:text-4xl">공지사항</h2>
+            <h2 className="section-title text-3xl md:text-4xl">새 소식</h2>
           </div>
           <Link to="/notice" className="btn-ghost self-start text-sm">
             전체 보기 →
@@ -342,21 +339,21 @@ function CtaBanner() {
     <section className="bg-brand-royal py-16 dark:bg-brand">
       <div className="mx-auto max-w-container section-x text-center">
         <h2 className="mb-4 text-2xl font-extrabold text-white md:text-4xl">
-          지금 바로 AI 학습을 시작하세요
+          영상 제작을 고민 중이신가요?
         </h2>
-        <p className="mb-8 text-white/70">모든 강의는 무료로 제공됩니다 · YouTube 링크 공개 영상</p>
+        <p className="mb-8 text-white/70">포트폴리오를 보고 마음에 드셨다면 편하게 연락해 주세요</p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
-            to="/videos/ai-related"
+            to="/videos/yojeom"
             className="rounded-full bg-white px-8 py-3.5 font-bold text-brand-royal transition hover:bg-brand-ice"
           >
-            AI 관련 영상 →
+            포트폴리오 보기 →
           </Link>
           <Link
-            to="/videos/ai-literacy"
+            to="/contact"
             className="rounded-full border-2 border-white/40 px-8 py-3.5 font-bold text-white transition hover:border-white hover:bg-white/10"
           >
-            AI 리터러시 →
+            문의하기
           </Link>
         </div>
       </div>
@@ -369,8 +366,8 @@ export default function Home() {
     <>
       <Hero />
       <Stats />
-      <Categories />
-      <LatestVideos />
+      <Portfolio />
+      <RecentWorks />
       <MissionBand />
       <Notices />
       <CtaBanner />

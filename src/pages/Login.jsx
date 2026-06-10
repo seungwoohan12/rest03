@@ -48,6 +48,7 @@ export default function Login() {
         provider: 'kakao',
         options: {
           redirectTo: 'https://seungwoohan12.github.io/rest03/',
+          scopes: 'profile_nickname',
         },
       })
       if (error) throw error
